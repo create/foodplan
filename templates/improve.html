@@ -5,7 +5,7 @@
     <h1>Make The Pantry better.</h1>
     <h4>Improve our recipes and ingredient database.</h4>
     <h2>Add a recipe</h2>
-    <form target="/submit_recipe" method="post">
+    <form action="/improve" method="post">
         {% csrf_token %}
         <div class="form-group">
             <input type="text" class="form-control input-lg yummly-id" placeholder="Yummly ID" name="yummly-id"></label>

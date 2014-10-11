@@ -8,7 +8,7 @@ class Recipe(models.Model):
     name = models.CharField(max_length=255)
     image_url = models.CharField(max_length=255)
     prep_time_seconds = models.IntegerField(default=1200)
-    instructions = ArrayField(dbtype="text", dimension=1)
+    instructions = ArrayField(models.TextField())
     ingredients = ArrayField(dbtype="varchar(255)")
     recipe_json = models.TextField(default='')
     servings = models.IntegerField(default=1)
