@@ -4,7 +4,13 @@
 {% block page_content %}
     <h1>Make The Pantry better.</h1>
     <h4>Improve our recipes and ingredient database.</h4>
+    <h2>Add a recipe</h2>
+    <form target="_blank" method="post">
+        <label><input type="text" name="yummly-id">Yummly ID</label>
+        <input type="submit" class="yummly-submit">
+    </form>
 
+    <h2>Ingredients</h2>
     {% for ingredient in page_info.ingredients %}
         <p>{{ ingredient.description }}</p>
     {% endfor %}

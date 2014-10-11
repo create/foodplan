@@ -50,7 +50,7 @@ def get_recipe(request):
 
     # specify random healthy ingredients to get enough data out of the API
     #terms = ["carrot", "onion", "potato", "tomato", "cucumber"]
-    terms = ["Apple-Cinnamon Strudel"]
+    terms = ["Chicken Salad with Basil and Parmesan"]
 
     recipe_url = "http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s" % (app_id, app_key)
 
@@ -75,10 +75,9 @@ def get_recipe(request):
                 if any(meat in s for s in ingredients):
                     is_vegetarian = False
             prep_time_seconds = a["totalTimeInSeconds"]
-            instructions = ['Preheat oven to 400 degrees; line a baking sheet with parchment paper or foil. On a lightly floured work surface, unfold pastry; roll out to a 12-by-14-inch rectangle. Place on sheet; refrigerate.',
-                            'In a large skillet, melt butter over medium; reserve 1 tablespoon in a small bowl. To skillet, add apples, 1/2 cup sugar, and cinnamon. Increase heat to medium-high; cook, tossing occasionally, until apples are tender and liquid has evaporated, about 15 minutes. Spread filling on a second rimmed baking sheet; let cool completely.',
-                            'With one short side of dough facing you, mound filling horizontally in a strip across the center, leaving a 1-inch border on both long sides. Fold top part, then bottom part of dough over filling. Turn pastry over, seam side down.',
-                            'Brush pastry with reserved melted butter; sprinkle with remaining 2 tablespoons sugar. Using a paring knife, cut steam vents in center of pastry. Bake until golden brown, 35 to 40 minutes. Let rest 10 minutes before serving.']
+            instructions = ["If you're cooking chicken for this, trim visible fat from 4 chicken breasts, then cut the chicken lengthwise into thirds.  Put the can of chicken stock, 2 cans of water, and the Italian Herb Blend into a small sauce pan and bring to a boil.  When it boils add chicken breasts, turn heat to medium low, and  let simmer 15-20 minutes, or until the chicken is cooked through.  Drain the chicken into a colander placed in the sink and let it cool.  (I saved the liquid in the freezer to add when I'm making chicken stock.)'In a large skillet, melt butter over medium; reserve 1 tablespoon in a small bowl. To skillet, add apples, 1/2 cup sugar, and cinnamon. Increase heat to medium-high; cook, tossing occasionally, until apples are tender and liquid has evaporated, about 15 minutes. Spread filling on a second rimmed baking sheet; let cool completely.",
+                            "While the chicken cools, slice the basil leaves (and wash if needed), chop green onions, and measure the freshly-grated Parmesan. When it's cool, dice chicken into pieces about 3/4 inch square and place into medium-sized bowl.",
+                            "Combine mayo and buttermilk, whisking until it's smooth.  Then stir in green onion, Parmesan, and basil. Add dressing to the chicken in the bowl and gently mix until chicken is well coated with dressing. Season with salt and fresh ground black pepper. This can be served immediately or chilled slightly before serving.  This will keep in the fridge for about a day, but it's best freshly made."]
             if not (prep_time_seconds and ingredients and recipe_id and recipe_name and recipe_image_url and prep_time_seconds):
                 print "Not enough information, try a different recipe\n"
             else:

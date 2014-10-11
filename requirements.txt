@@ -2,3 +2,7 @@ Django==1.7
 South==1.0
 psycopg2==2.5.4
 wsgiref==0.1.2
+django-extensions==1.4.0
+djorm-ext-core==0.7
+djorm-ext-expressions==0.6
+djorm-ext-pgarray==0.10
