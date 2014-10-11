@@ -12,7 +12,8 @@ def home(request):
     if all(info in request.session for info in ['age', 'gender', 'style']):
         return redirect('/dashboard')
     else:
-        return render(request, 'home.html', {"page_info": page_info})
+        return render(request, 'home.html', {"page_info": page_info,
+                                             "hide_links": True})
 
 
 def signin(request):
@@ -109,8 +110,8 @@ def dashboard(request):
         request.session['style'] = request.POST['style']
 
     # redirect if preferences are not available via session
-    elif not all(info in request.session for info in ['age', 'gender', 'style']):
-        return redirect('/')
+    # elif not all(info in request.session for info in ['age', 'gender', 'style']):
+    #     return redirect('/')
 
     user_age = request.session['age']
     user_gender = request.session['gender']
