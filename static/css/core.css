@@ -54,19 +54,6 @@ input[type=number] {
     width: 80px;
 }
 
-.meal-card {
-    padding: 5px;
-    height: 400px;
-    width: 200px;
-}
-.meal-card img {
-    height: 100%;
-    width: 100%;
-}
-.meal-card title {
-    background: rgba(0,0,0,.3);
-    color: white;
-}
 
 .top-buffer {
     margin-top: 100px;
@@ -85,4 +72,14 @@ input[type=number] {
 
 .btn-submit {
     border-color: #888;
+}
+
+.yummly-id {
+    width: 50%;
+}
+.input-lg {
+    margin-bottom: 5px;
+}
+.meal-card {
+    height: 400px;
 }

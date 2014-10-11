@@ -5,9 +5,20 @@
     <h1>Make The Pantry better.</h1>
     <h4>Improve our recipes and ingredient database.</h4>
     <h2>Add a recipe</h2>
-    <form target="_blank" method="post">
-        <label><input type="text" name="yummly-id">Yummly ID</label>
-        <input type="submit" class="yummly-submit">
+    <form target="/submit_recipe" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control input-lg yummly-id" placeholder="Yummly ID" name="yummly-id"></label>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control input-lg" placeholder="Preparation Step 1" name="step-1"></label>
+            <input type="text" class="form-control input-lg" placeholder="Step 2 (optional)" name="step-2"></label>
+            <input type="text" class="form-control input-lg" placeholder="Step 3 (optional)" name="step-3"></label>
+            <input type="text" class="form-control input-lg" placeholder="Step 4 (optional)" name="step-4"></label>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="submit btn yummly-submit">
+        </div>
     </form>
 
     <h2>Ingredients</h2>

@@ -6,3 +6,7 @@ django-extensions==1.4.0
 djorm-ext-core==0.7
 djorm-ext-expressions==0.6
 djorm-ext-pgarray==0.10
+dj-database-url==0.2.1
+gunicorn==19.1.1
+requests==2.4.3
+enum34==1.0
