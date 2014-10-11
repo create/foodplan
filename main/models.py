@@ -7,11 +7,12 @@ class Recipe(models.Model):
     #id = models.CharField()
     name = models.CharField(max_length=255)
     image_url = models.CharField(max_length=255)
-    prep_time_seconds = models.IntegerField()
+    prep_time_seconds = models.IntegerField(default=1200)
     instructions = ArrayField(dbtype="text", dimension=1)
     ingredients = ArrayField(dbtype="varchar(255)")
-    recipe_json = models.TextField()
-
+    recipe_json = models.TextField(default='')
+    servings = models.IntegerField(default=1)
+    is_vegetarian = models.BooleanField(default=True)
     objects = ExpressionManager()
 
 class Ingredient(models.Model):
