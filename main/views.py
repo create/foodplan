@@ -76,7 +76,7 @@ def improve(request):
                     if not (prep_time_seconds and ingredients and recipe_id and recipe_name and recipe_image_url and prep_time_seconds):
                         print "Not enough information, try a different recipe\n"
                     else:
-                        if not Recipe.objects.get(name=recipe_name):
+                        if not Recipe.objects.filter(name=recipe_name):
                             recipe = Recipe(name=recipe_name,
                                             image_url=recipe_image_url,
                                             ingredients_json=ingredients,
