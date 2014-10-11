@@ -4,6 +4,8 @@ import time
 
 from evernote.api.client import EvernoteClient
 
+from main.models import Recipe
+
 
 class EvernoteExporter():
     def __init__(self, sandbox=True):
@@ -44,32 +46,56 @@ class EvernoteExporter():
                 break
 
         if target_notebook == '':
-            print "Groceries Notebook not found"
-            return None
+            print 'Notebook Groceries does not exist'
+            exit(1)
 
         return target_notebook.guid
 
-    def export_grocery_list(self, items):
+    def _create_note(self, title, content):
         note = Types.Note()
-        note.title = "Groceries List " + time.strftime("%H:%M %d/%m/%Y").__str__()
+        note.title = title
         note.notebookGuid = self._get_notebook_guid()
 
         note.content = '<?xml version="1.0" encoding="UTF-8"?>'
         note.content += '<!DOCTYPE en-note SYSTEM ' \
             '"http://xml.evernote.com/pub/enml2.dtd">'
-        note.content += '<en-note><br/>'
-        for item in items:
-            print item
-            note.content += '<div><en-todo/>' + item['name'] + '</div>'
+        note.content += '<en-note>'
+        note.content += content
         note.content += '</en-note>'
 
         created_note = self.note_store.createNote(note)
-
         return created_note.guid
+
+    def export_recipe(self, item):
+        title = "Groceries List " + item.name
+
+        content = ''
+        content += '<div>' + item.instructions +'</div>'
+        content += '<div><br></div>'
+        content += '<div>' + item.ingredients +'</div>'
+
+        return self._create_note(title, content)
+
+    def export_grocery_list(self, items):
+        title = "Groceries List " + time.strftime("%H:%M %d/%m/%Y").__str__()
+
+        content = ''
+        for item in items:
+            print item
+            content += '<div><en-todo/>' + item['name'] + '</div>'
+
+        return self._create_note(title, content)
 
 
 # USAGE EXAMPLE
-# items = [{'name': 'item1'}, {"name": "item2"}]
-# exporter = EvernoteExporter(sandbox=True)
-# save guid for editing the note
-# guid = exporter.export_grocery_list(items)
+first = False
+second = True
+
+if first:
+    items = [{'name': 'TEST1'}, {"name": "TEST2"}]
+    exporter = EvernoteExporter(sandbox=True)
+    # save guid for editing the note
+    guid = exporter.export_grocery_list(items)
+
+if second:
+    pass
