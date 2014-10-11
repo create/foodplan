@@ -103,7 +103,6 @@ ALLOWED_HOSTS = ["*"]
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
 
 if os.environ.get('PROD'):
     DATABASES['default'] = dj_database_url.config()
