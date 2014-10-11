@@ -11,7 +11,6 @@ urlpatterns = patterns('',
     url(r'^signup/', 'main.views.signup'),
     url(r'^dashboard/', 'main.views.dashboard'),
     url(r'^$', 'main.views.home'),
-    url(r'^week', 'main.views.week'),
     url(r'^pantry', 'main.views.pantry'),
     url(r'^improve', 'main.views.improve'),
 )
