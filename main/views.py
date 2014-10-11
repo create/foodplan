@@ -40,6 +40,8 @@ def improve(request):
         for i in range(1,5):
             if request.POST['step-%d' % i]:
                 instructions.append(request.POST['step-%d' % i])
+
+        instructions = json.dumps(instructions)
         recipe_id_url = "http://api.yummly.com/v1/api/recipe/%s?_app_id=%s&_app_key=%s" % (recipe_id, app_id, app_key)
         specific_res = requests.get(recipe_id_url)
         if specific_res:
@@ -62,6 +64,7 @@ def improve(request):
                     recipe_name = a["recipeName"]
                     recipe_image_url = a["smallImageUrls"][0] + "0"
                     ingredients = a["ingredients"]
+                    ingredients = json.dumps(ingredients)
                     is_vegetarian = True
                     for meat in ['turkey', 'beef', 'meat', 'steak', 'chicken', 'pork', 'bacon', 'ham', 'duck', 'goose']:
                         if any(meat in s for s in ingredients):
@@ -76,10 +79,10 @@ def improve(request):
 
                         recipe = Recipe(name=recipe_name,
                                         image_url=recipe_image_url,
-                                        ingredients=ingredients,
+                                        ingredients_json=ingredients,
                                         recipe_json=json.dumps(a),
                                         prep_time_seconds=prep_time_seconds,
-                                        instructions=instructions,
+                                        steps_json=instructions,
                                         is_vegetarian=is_vegetarian,
                                         servings=servings)
                         recipe.save()
@@ -88,7 +91,7 @@ def improve(request):
         else:
             print "err\n"
 
-    ingredients = Ingredient.objects.all()
+    ingredients = Ingredient.objects.all()[:200];
     page_info = {"page_title": "Improve",
                  "ingredients": ingredients}
     return render(request, 'improve.html', {"page_info": page_info})
