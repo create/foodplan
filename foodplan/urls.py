@@ -13,4 +13,6 @@ urlpatterns = patterns('',
     url(r'^$', 'main.views.home'),
     url(r'^pantry/', 'main.views.pantry'),
     url(r'^improve/', 'main.views.improve'),
+    url(r'^get_recipe', 'main.views.get_recipe')
+
 )
