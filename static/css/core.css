@@ -46,6 +46,11 @@ footer > p {
     margin-top: auto;
     margin-bottom: auto;
 }
+
+/*a {*/
+    /*color: #D15919;*/
+/*}*/
+
 footer a {
     color: #aaaaaa;
 }
