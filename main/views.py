@@ -121,9 +121,10 @@ def dashboard(request):
 
     day = datetime.datetime.now().weekday()
     # orderby ? is slow
-    recipes = Recipe.objects.order_by('?')[:5]
+    recipes = Recipe.objects.order_by('?')[:7]
     for recipe in recipes:
         recipe.day = util.day_string(day)
+        recipe.day_no = day
         day = (day + 1) % 7
     page_info = {"page_title": "Dashboard"}
     return render(request, 'dashboard.html', {"page_info": page_info,
