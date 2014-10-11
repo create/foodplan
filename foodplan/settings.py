@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'main',
+    #'registration'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -96,4 +97,6 @@ TEMPLATE_DIRS = (
     BASE_DIR + '/templates/',
 )
 
-AUTH_USER_MODEL = 'foodplan.FoodplanUser'
+AUTH_USER_MODEL = 'main.FoodplanUser'
+
+ACCOUNT_ACTIVATION_DAYS = 7
