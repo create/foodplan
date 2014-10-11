@@ -1,12 +1,18 @@
 from django.db import models
+from djorm_pgarray.fields import ArrayField
+from djorm_expressions.models import ExpressionManager
 
 class Recipe(models.Model):
+    __tablename__ = 'main_recipe'
     #id = models.CharField()
     name = models.CharField(max_length=255)
     image_url = models.CharField(max_length=255)
-    #description = models.CharField()
-    class Meta:
-        app_label = 'main'
+    prep_time_seconds = models.IntegerField()
+    instructions = ArrayField(dbtype="text", dimension=1)
+    ingredients = ArrayField(dbtype="varchar(255)")
+    recipe_json = models.TextField()
+
+    objects = ExpressionManager()
 
 class Ingredient(models.Model):
     __tablename__ = 'main_ingredient'
