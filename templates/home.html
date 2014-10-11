@@ -6,8 +6,6 @@
 {% block page_content %}
 
 
-<div id="fullpage">
-    <div class="section">
     
     
         <h1>Pantry tells you what to cook.</h1>
@@ -15,85 +13,81 @@
     
     </div>
 
-    <div class="section"> 
 
-        <h1>Stuff.</h1>
-        <h4>Yes, stuff.</h4>
-        <form method="post" action="dashboard">
-            <div class="form-group">
+    <h1>Stuff.</h1>
+    <h4>Yes, stuff.</h4>
+    <form method="post" action="dashboard">
+        <div class="form-group">
 
-                <div class="row">
-                    <div class="col-md-6 col-prefs text-center">
-                        <label for="formGroupInputLarge">
-                        Name
-                        </label>
-                    </div>
-                    <div class="col-md-6 col-prefs">
-                        <label>
-                            <input type="text" class="form-control input" placeholder="" name="name">
-                        </label>
-                    </div>
+            <div class="row">
+                <div class="col-md-6 col-prefs text-center">
+                    <label for="formGroupInputLarge">
+                    Name
+                    </label>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 col-prefs text-center">
-                        <label for="formGroupInputLarge">
-                        Age
-                        </label>
-                    </div>
-                    <div class="col-md-6 col-prefs">
-                        <label>
-                            <input type="text" class="form-control input" placeholder="" name="age">
-                        </label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 col-prefs text-center">
-                        <label for="formGroupInputLarge">
-                        Gender
-                        </label>
-                    </div>
-                    <div class="col-md-6 col-prefs">
-                        <div class="btn-group btn-group-prefs" data-toggle="buttons">
-                            <label class="btn btn-default btn-prefs">
-                                <input type="radio" name="gender" value="m">Male
-                            </label>
-                            <label class="btn btn-default btn-prefs">
-                                <input type="radio" name="gender" value="f">Female
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-prefs text-center">
-                        <label for="formGroupInputLarge">
-                        Style
-                        </label>
-                    </div>
-                    <div class="col-md-6 col-prefs">
-                        <div class="btn-group btn-group-prefs" data-toggle="buttons">
-                            <label class="btn btn-default btn-prefs">
-                                <input type="radio" name="style" value="classic">
-                                Classic
-                            </label>
-                            <label class="btn btn-default btn-prefs">
-                                <input type="radio" name="style" value="vegetarian">
-                                Vegetarian
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
+                <div class="col-md-6 col-prefs">
+                    <label>
+                        <input type="text" class="form-control input" placeholder="" name="name">
+                    </label>
                 </div>
             </div>
-            <div class="form-group top-buffer text-center">
-                <button type="submit" class="btn btn-lg btn-submit">Make my week</button>
+            <div class="row">
+                <div class="col-md-6 col-prefs text-center">
+                    <label for="formGroupInputLarge">
+                    Age
+                    </label>
+                </div>
+                <div class="col-md-6 col-prefs">
+                    <label>
+                        <input type="text" class="form-control input" placeholder="" name="age">
+                    </label>
+                </div>
             </div>
 
-            {% csrf_token %}
-        </form>
-    </div>
-    <div class="section">section 3</div>
-</div>
+            <div class="row">
+                <div class="col-md-6 col-prefs text-center">
+                    <label for="formGroupInputLarge">
+                    Gender
+                    </label>
+                </div>
+                <div class="col-md-6 col-prefs">
+                    <div class="btn-group btn-group-prefs" data-toggle="buttons">
+                        <label class="btn btn-default btn-prefs">
+                            <input type="radio" name="gender" value="m">Male
+                        </label>
+                        <label class="btn btn-default btn-prefs">
+                            <input type="radio" name="gender" value="f">Female
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-prefs text-center">
+                    <label for="formGroupInputLarge">
+                    Style
+                    </label>
+                </div>
+                <div class="col-md-6 col-prefs">
+                    <div class="btn-group btn-group-prefs" data-toggle="buttons">
+                        <label class="btn btn-default btn-prefs">
+                            <input type="radio" name="style" value="classic">
+                            Classic
+                        </label>
+                        <label class="btn btn-default btn-prefs">
+                            <input type="radio" name="style" value="vegetarian">
+                            Vegetarian
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+        </div>
+        <div class="form-group top-buffer text-center">
+            <button type="submit" class="btn btn-lg btn-submit">Make my week</button>
+        </div>
+
+        {% csrf_token %}
+    </form>
 
 {% endblock %}

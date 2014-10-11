@@ -21,8 +21,6 @@
     <!-- Basic css for all pages -->
     <link href="{% static "css/core.css" %}" rel="stylesheet">
 
-    <link href="{% static "css/jquery.fullPage.css" %}" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     {% block custom_css %}{% endblock %}
 
@@ -58,25 +56,6 @@
     <script src="{% static "js/ajaxify.min.js" %}"></script>
     <script src="{% static "js/main.js" %}"></script>
     <script src="{% static "js/holder.js" %}"></script>
-    <script src="{% static "js/jquery.fullPage.min.js" %}"></script>
-    <script src="{% static "js/jquery.easings.min.js" %}"></script>
-    <script src="{% static "js/jquery.slimscroll.min.js" %}"></script>
-
-    <script type="text/javascript" charset="utf-8">
-        $(document).ready(function() {
-            $('#fullpage').fullpage({
-                paddingTop: '20px',
-                verticalCentered: false,
-                navigationTooltips: ['firstSlide', 'secondSlide'],
-                navigationPosition: 'right',
-                navigation: true,
-                scrollOverflow: false,
-                easing: 'swing',
-                loopBottom: true,
-            });
-
-        });
-    </script>
 
   </body>
 </html>
