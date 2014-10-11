@@ -94,3 +94,5 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     BASE_DIR + '/templates/',
 )
+import dj_database_url
+DATABASES['default'] = dj_database_url.config()
