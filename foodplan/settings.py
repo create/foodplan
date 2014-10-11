@@ -96,6 +96,7 @@ TEMPLATE_DIRS = (
 )
 import dj_database_url
 if os.environ.get('PROD'):
+    DEBUG = False
     PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
     STATIC_ROOT = 'staticfiles'
     STATIC_URL = '/static/'
