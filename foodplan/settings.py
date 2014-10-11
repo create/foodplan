@@ -10,8 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
+import dj_database_url
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
@@ -20,6 +19,8 @@ SECRET_KEY = 't9y)sc3566c@vwef_+13s+gui)jo9sla9mb++@t-z+x&q=%s@u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+if os.environ.get('PROD'):
+    DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -88,21 +89,33 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+
+
+DEBUG = False
+
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(PROJECT_PATH, 'static'),
+)
+DATABASES['default'] = dj_database_url.config()
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ALLOWED_HOSTS = ["*"]
+
+# Static asset configuration
+import os
+BASE_DIR = os.path.dirname(os.path.dirpath(__file__))
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
 )
 
 TEMPLATE_DIRS = (
     BASE_DIR + '/templates/',
 )
-PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = 'staticfiles'
-
-import dj_database_url
-if os.environ.get('PROD'):
-    DEBUG = False
-
-    STATICFILES_DIRS = (
-        os.path.join(PROJECT_PATH, 'static'),
-    )
-    DATABASES['default'] = dj_database_url.config()
