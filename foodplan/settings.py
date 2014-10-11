@@ -50,6 +50,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+
+# SESSION_COOKIE_HTTPONLY ?
+
 ROOT_URLCONF = 'foodplan.urls'
 
 WSGI_APPLICATION = 'foodplan.wsgi.application'

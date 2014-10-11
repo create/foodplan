@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 import requests
-from models import Recipe, Ingredient
+from models import Recipe, Ingredient, User
 import util, forms
 
 def home(request):
@@ -100,6 +100,16 @@ def improve(request):
 
 
 def dashboard(request):
+    make_user = True
+    user = None
+    if request.session.get('unique_id'):
+        # get their stuff from db
+        user = User.objects.filter(id=request.session['unique_id']).first()
+
+    if not user:
+        user = User()
+        user.save()
+        request.session['unique_id'] = user.id
 
     # save preferences sent via POST
     # TODO: check if all values are set
@@ -107,6 +117,11 @@ def dashboard(request):
         request.session['age'] = request.POST['age']
         request.session['gender'] = request.POST['gender']
         request.session['style'] = request.POST['style']
+        # save user in db
+        user.is_vegetarian = (request.POST['style'] == "vegetarian");
+        user.age = int(request.POST['age']);
+        user.gender = int(request.POST['gender'] == 'm');
+        user.save()
 
     # redirect if preferences are not available via session
     # elif not all(info in request.session for info in ['age', 'gender', 'style']):
@@ -120,8 +135,14 @@ def dashboard(request):
 
 
     day = datetime.datetime.now().weekday()
-    # orderby ? is slow
-    recipes = Recipe.objects.order_by('?')[:7]
+
+    num_to_show = 7
+
+    # TODO orderby ? is slow
+    if user.is_vegetarian:
+        recipes = Recipe.objects.order_by('?')[:num_to_show]
+    else:
+        recipes = Recipe.objects.filter(is_vegetarian=True).order_by('?')[:num_to_show]
     for recipe in recipes:
         recipe.day = util.day_string(day)
         recipe.day_no = day
