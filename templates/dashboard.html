@@ -4,29 +4,33 @@
     <div class="container-fluid">
 
         <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Monday</h3>
-                    </div>
-                    <div class="panel-body">
-                        <img src="holder.js/350x200" class="img-thumbnail img-responsive">
-                        <br>
-                        <a class="btn btn-danger btn-block">I don't like it</a>
+            {% for plan in meal_plans %}
+                <div class="col-md-4 meal-card">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ plan.day }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <img src="{{ plan.image_url }}" class="img-thumbnail img-responsive">
+                            <br>
+                            <a class="btn btn-danger btn-block">Reroll</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
+            {% endfor %}
+            <div class="col-md-4 meal-card">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Tuesday</h3>
                     </div>
                     <div class="panel-body">
-                        <img src="holder.js/350x200" class="img-thumbnail img-responsive">
-                    </div>
+                            <img src="holder.js/350x200" class="img-thumbnail img-responsive">
+                            <br>
+                            <a class="btn btn-danger btn-block">Reroll</a>
+                        </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 meal-card">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Wednesday</h3>

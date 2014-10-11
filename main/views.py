@@ -1,8 +1,9 @@
 import json
+import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
 import requests
-from models import Recipe
+from models import Recipe, Ingredient
 
 def home(request):
     page_info = {"page_title": "Home"}
@@ -25,13 +26,17 @@ def pantry(request):
 
 
 def improve(request):
-    page_info = {"page_title": "Improve"}
+    ingredients = Ingredient.objects.all()
+    page_info = {"page_title": "Improve",
+                 "ingredients": ingredients}
     return render(request, 'improve.html', {"page_info": page_info})
 
 
 def dashboard(request):
+    day = datetime.datetime.now().weekday()
     page_info = {"page_title": "Dashboard"}
-    return render(request, 'dashboard.html', {"page_info": page_info})
+    return render(request, 'dashboard.html', {"page_info": page_info,
+                                              "day": day})
 
 def get_recipe(request):
     app_id = "e91111f8"
