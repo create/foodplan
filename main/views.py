@@ -30,6 +30,11 @@ def pantry(request):
     return render(request, 'pantry.html', {"page_info": page_info})
 
 
+def about(request):
+    page_info = {"page_title": "About"}
+    return render(request, 'about.html', {"page_info": page_info})
+
+
 def improve(request):
     if request.method == 'POST':
         print request.POST

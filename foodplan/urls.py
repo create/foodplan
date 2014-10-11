@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^dashboard', 'main.views.dashboard'),
     url(r'^$', 'main.views.home'),
     url(r'^pantry', 'main.views.pantry'),
-    url(r'^improve', 'main.views.improve')
+    url(r'^improve', 'main.views.improve'),
+    url(r'^about', 'main.views.about')
 
 )
