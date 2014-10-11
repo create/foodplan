@@ -95,12 +95,13 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     BASE_DIR + '/templates/',
 )
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = 'staticfiles'
+
 import dj_database_url
 if os.environ.get('PROD'):
     DEBUG = False
-    PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
-    STATIC_ROOT = 'staticfiles'
-    STATIC_URL = '/static/'
+
     STATICFILES_DIRS = (
         os.path.join(PROJECT_PATH, 'static'),
     )
