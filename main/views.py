@@ -3,14 +3,19 @@ from django.http import HttpResponse
 
 
 def home(request):
-    page_info = {"page_title": "Homepage"}
-    return render(request, 'home.html', {"page_info": page_info})
-
+    return render(request, 'home.html')
 
 def signin(request):
-    page_info = {"page_title": "Sign In"}
-    return render(request, 'signin.html', {"page_info": page_info})
+    return render(request, 'signin.html')
 
 def signup(request):
-    page_info = {"page_title": "Sign Up"}
-    return render(request, 'signup.html', {"page_info": page_info})
+    return render(request, 'signup.html')
+
+def week(request):
+    return render(request, 'week.html')
+
+def pantry(request):
+    return render(request, 'pantry.html')
+
+def improve(request):
+    return render(request, 'improve.html')

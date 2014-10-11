@@ -1,0 +1,69 @@
+body {
+    background-color: rgba(228, 225, 186, 0.19);
+    color: #444444;
+    font-family: 'Open Sans', sans-serif;
+    min-height: 400px;
+}
+body > div, header, footer {
+    padding: 30px;
+}
+header {
+    background: white;
+
+}
+.logo {
+    font-style: italic;
+    font-size: 30px;
+    display: inline-block;
+}
+
+.links {
+    list-style-type: none;
+    display: inline-block;
+}
+.links li {
+    display: inline-block;
+    margin-right: 40px;
+    font-size: 20px;
+}
+.content {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+footer {
+    background: #ffffff;
+    color: #cccccc;
+    height: 100px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-style: italic;
+}
+footer > p {
+    line-height: 40px;
+    vertical-align: middle;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+footer a {
+    color: #aaaaaa;
+}
+input[type=number] {
+    width: 80px;
+}
+
+.meal-card {
+    padding: 5px;
+    height: 400px;
+    width: 200px;
+}
+.meal-card img {
+    height: 100%;
+    width: 100%;
+}
+.meal-card title {
+    background: rgba(0,0,0,.3);
+    color: white;
+}
