@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     url(r'^week', 'main.views.week'),
     url(r'^pantry', 'main.views.pantry'),
     url(r'^improve', 'main.views.improve'),
+    url(r'^get_recipe', 'main.views.get_recipe')
 )

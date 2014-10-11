@@ -8,7 +8,7 @@ class Recipe(models.Model):
     #description = models.CharField()
 
     class Meta:
-        app_label = 'foodplan'
+        app_label = 'main'
 
 #class Ingredient(models.Model):
     #name = models.CharField(max_length=255)
