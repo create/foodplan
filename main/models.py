@@ -27,7 +27,9 @@ class Recipe(models.Model):
     steps_json = models.TextField(default='')
     ingredients_json = models.TextField(default='')
     recipe_json = models.TextField(default='')
+    detailed_json = models.TextField(default='')
     servings = models.IntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=5.0)
     is_vegetarian = models.BooleanField(default=True)
     objects = ExpressionManager()
 
