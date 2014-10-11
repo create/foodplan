@@ -1,6 +1,7 @@
 import evernote.edam.userstore.constants as UserStoreConstants
 import evernote.edam.type.ttypes as Types
 import time
+import json
 
 from evernote.api.client import EvernoteClient
 
@@ -10,7 +11,9 @@ from main.models import Recipe
 class EvernoteExporter():
     def __init__(self, sandbox=True):
         self.sandbox = sandbox
-        self.notebook_name = "Groceries"
+        self.notebook_name = "Pantry"
+
+        self.ingredients = {}
 
         self.auth_token_real = "S=s344:U=371ef6d:E=150580d1802:C=149005be9c0:P=1cd:A=en-devtoken:V=2:H=5f5cb18a5e1755a7facdff9e44b7b411"
         self.auth_token_sandbox = "S=s1:U=8fa5d:E=150581d5082:C=149006c2218:P=1cd:A=en-devtoken:V=2:H=e59f1fe3b6442900f944689ea7ecff55"
@@ -67,35 +70,68 @@ class EvernoteExporter():
         return created_note.guid
 
     def export_recipe(self, item):
-        title = "Groceries List " + item.name
+        title = "Recipe: " + item.name
 
         content = ''
-        content += '<div>' + item.instructions +'</div>'
-        content += '<div><br></div>'
-        content += '<div>' + item.ingredients +'</div>'
+        content += '<div><b>Name:</b>' + item.name + '</div>'
+        content += '<div><br/></div>'
+        content += self._create_steps_list(item.steps_json)
+        content += '<div><br/></div>'
+        content += self._create_ingredients_list(item.ingredients_json)
 
         return self._create_note(title, content)
 
-    def export_grocery_list(self, items):
+    def export_grocery_list(self):
+        items = self.ingredients
+        print items
         title = "Groceries List " + time.strftime("%H:%M %d/%m/%Y").__str__()
 
         content = ''
-        for item in items:
-            print item
-            content += '<div><en-todo/>' + item['name'] + '</div>'
+        for name in items:
+            content += '<div><en-todo/>' + name + '</div>'
 
         return self._create_note(title, content)
+
+    def _create_steps_list(self, steps_json):
+        sl = json.loads(steps_json)
+        content = ''
+        content += '<div><b>Steps:</b></div>'
+        for s in sl:
+            content += '<div>' + s + '</div>'
+
+        return content
+
+    def _create_ingredients_list(self, ingredients_json):
+        il = json.loads(ingredients_json)
+        content = ''
+        content += '<div><b>Ingredients:</b></div>'
+        for i in il:
+            content += '<div>' + i + '</div>'
+
+        return content
+
+    def _add_to_ingredient_list(self, item):
+        if item in self.ingredients:
+            self.ingredients[item] += 1
+        else:
+            self.ingredients[item] = 1
+
+    def import_meals(self, meals_list):
+        for meal in meals_list:
+            # TODO uncomment this section
+            # self.export_recipe(meal)
+            il = json.loads(meal.ingredients_json)
+            for i in il:
+                self._add_to_ingredient_list(i)
+
+        self.export_grocery_list()
 
 
 # USAGE EXAMPLE
 first = False
-second = True
 
 if first:
     items = [{'name': 'TEST1'}, {"name": "TEST2"}]
     exporter = EvernoteExporter(sandbox=True)
     # save guid for editing the note
     guid = exporter.export_grocery_list(items)
-
-if second:
-    pass
