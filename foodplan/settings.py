@@ -95,3 +95,5 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     BASE_DIR + '/templates/',
 )
+
+AUTH_USER_MODEL = 'foodplan.FoodplanUser'
