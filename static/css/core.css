@@ -67,9 +67,16 @@ input[type=number] {
 }
 
 .top-buffer {
+    margin-top: 100px;
+}
+
+.col-prefs {
     margin-top: 50px;
 }
 
-.col-md-6 {
-    margin-top: 50px;
+.btn-prefs {
+    width: 50%;
+}
+.btn-group {
+    width: 60%;
 }
