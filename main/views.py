@@ -12,8 +12,8 @@ def home(request):
     if all(info in request.session for info in ['age', 'gender', 'style']):
         return redirect('/dashboard/')
     else:
-        return render(request, 'home.html', {"page_info": page_info,
-                                             "hide_links": True})
+        return render(request, 'home.html', {"page_info": page_info})
+
 
 def signin(request):
     page_info = {"page_title": "Sign in"}
