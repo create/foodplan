@@ -95,4 +95,11 @@ TEMPLATE_DIRS = (
     BASE_DIR + '/templates/',
 )
 import dj_database_url
-DATABASES['default'] = dj_database_url.config()
+if os.environ.get('PROD'):
+    PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+    STATIC_ROOT = 'staticfiles'
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = (
+        os.path.join(PROJECT_PATH, 'static'),
+    )
+    DATABASES['default'] = dj_database_url.config()
