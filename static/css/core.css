@@ -51,3 +51,29 @@ footer a {
 input[type=number] {
     width: 80px;
 }
+
+.meal-card {
+    padding: 5px;
+    height: 400px;
+    width: 200px;
+}
+.meal-card img {
+    height: 100%;
+    width: 100%;
+}
+.meal-card title {
+    background: rgba(0,0,0,.3);
+    color: white;
+}
+
+.top-buffer {
+    margin-top: 50px;
+}
+
+.col-md-6 {
+    margin-top: 50px;
+}
+
+.bitn-group {
+    width: 100px;
+}
