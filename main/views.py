@@ -64,6 +64,7 @@ def improve(request):
                     recipe_name = a["recipeName"]
                     recipe_image_url = a["smallImageUrls"][0] + "0"
                     ingredients = a["ingredients"]
+                    ingredients = json.dumps(ingredients)
                     is_vegetarian = True
                     for meat in ['turkey', 'beef', 'meat', 'steak', 'chicken', 'pork', 'bacon', 'ham', 'duck', 'goose']:
                         if any(meat in s for s in ingredients):
@@ -78,7 +79,7 @@ def improve(request):
 
                         recipe = Recipe(name=recipe_name,
                                         image_url=recipe_image_url,
-                                        ingredients=ingredients,
+                                        ingredients_json=ingredients,
                                         recipe_json=json.dumps(a),
                                         prep_time_seconds=prep_time_seconds,
                                         steps_json=instructions,

@@ -9,7 +9,7 @@ class Recipe(models.Model):
     image_url = models.CharField(max_length=255)
     prep_time_seconds = models.IntegerField(default=1200)
     steps_json = models.TextField(default='')
-    ingredients = ArrayField(dbtype="varchar(255)")
+    ingredients_json = models.TextField(default='')
     recipe_json = models.TextField(default='')
     servings = models.IntegerField(default=1)
     is_vegetarian = models.BooleanField(default=True)
