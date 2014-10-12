@@ -2,7 +2,7 @@
 {% block page_content %}
 <!-- Main component for a primary marketing message or call to action -->
 <h1>Dashboard</h1>
-<h4>asd</h4>
+<h4>This is your weekly plan!</h4>
     <div class="container-fluid">
         <div class="row">
             {% for recipe in recipes %}
@@ -36,4 +36,7 @@
     });
 </script>
 
+{% endblock %}
+{% block totalprice %}
+<span id="totalprice">{{total_price}}$</span>
 {% endblock %}

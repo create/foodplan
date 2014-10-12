@@ -184,6 +184,7 @@ def dashboard(request):
         recipe.day = util.day_string(day)
         recipe.day_no = day
         day = (day + 1) % 7
+    total_price = "%.2f" % total_price
     page_info = {"page_title": "Dashboard"}
     return render(request, 'dashboard.html', {"page_info": page_info,
                                               "recipes": recipes, "total_price": total_price})
