@@ -6,13 +6,11 @@ from django.shortcuts import redirect
 import requests
 from models import Recipe, Ingredient, User, ScheduledMeal
 import util, forms
+import re, posixpath, urlparse
 
 def home(request):
     page_info = {"page_title": "Home"}
-    if all(info in request.session for info in ['age', 'gender', 'style']):
-        return redirect('/dashboard')
-    else:
-        return render(request, 'home.html', {"page_info": page_info})
+    return render(request, 'home.html', {"page_info": page_info})
 
 
 def signin(request):
@@ -41,6 +39,13 @@ def improve(request):
         app_id = "e91111f8"
         app_key = "f9d16213fe4a2371bb8c919c89dc409a"
         recipe_id = request.POST['yummly-id']
+
+        # extract actual recipe id if recipe_id is a url
+        if not re.match('^[\w-]+$', recipe_id):
+            print "rematch"
+            recipe_id = posixpath.basename(urlparse.urlsplit(recipe_id).path)
+            print recipe_id
+
         instructions = []
         for i in range(1,5):
             if request.POST['step-%d' % i]:
@@ -152,13 +157,13 @@ def dashboard(request):
     today = now.date()
     recipes = []
     for i in range(0, num_to_show):
-        meal = ScheduledMeal.objects.filter(date=today).first()
+        meal = ScheduledMeal.objects.filter(date=today).filter(user_id=user.id).first()
         ids_to_exclude = (recipe.id for recipe in recipes)
         if not meal:
             if not user.is_vegetarian:
-                recipe_id = Recipe.objects.exclude(id__in=ids_to_exclude).order_by('?').first()
+                recipe_id = _get_random_recipe(False, ids_to_exclude)
             else:
-                recipe_id = Recipe.objects.exclude(id__in=ids_to_exclude).filter(is_vegetarian=True).order_by('?').first()
+                recipe_id = _get_random_recipe(True, ids_to_exclude)
 
             if recipe_id:
                 recipe_id = recipe_id.id
@@ -170,10 +175,42 @@ def dashboard(request):
                 recipes.append(recipe)
         today = today + datetime.timedelta(days=1)
 
+    total_price = 0.
     for recipe in recipes:
+        total_price += float(recipe.price)
         recipe.day = util.day_string(day)
         recipe.day_no = day
         day = (day + 1) % 7
+    total_price = "%.2f" % total_price
     page_info = {"page_title": "Dashboard"}
     return render(request, 'dashboard.html', {"page_info": page_info,
-                                              "recipes": recipes})
+                                              "recipes": recipes, "total_price": total_price})
+
+def _get_random_recipe(is_vegetarian=False, ids_to_exclude=None):
+    if not ids_to_exclude:
+        ids_to_exclude = []
+    if is_vegetarian:
+        return Recipe.objects.filter(is_vegetarian=True).exclude(id__in=ids_to_exclude).order_by('?').first()
+    else:
+        return Recipe.objects.exclude(id__in=ids_to_exclude).order_by('?').first()
+
+def reroll(request):
+    response = {}
+    response['result'] = 'error'
+    if request.GET.get('day', False):
+        user = User.objects.filter(id=request.session.get('unique_id')).first()
+        day = int(request.GET.get('day'))
+        today = datetime.datetime.now().date()
+        delta = (day - today.weekday()) % 7
+        day_to_reroll = today + datetime.timedelta(days=delta)
+        meal = ScheduledMeal.objects.filter(date=day_to_reroll).filter(user_id=user.id).first()
+        recipe = _get_random_recipe(user.is_vegetarian)
+        meal.recipe_id = recipe.id
+        meal.save()
+        response['result'] = {'image_url': recipe.image_url,
+            'name': recipe.name,
+            'price': str(recipe.price),
+            'total_price': str(recipe.price) # TODO make real price
+        }
+
+    return HttpResponse(json.dumps(response), content_type='application/json')

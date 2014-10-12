@@ -3,47 +3,55 @@
 
 {% block title %}Home{% endblock %}
 
+{% block custom_css %}
+<style>
+body {
+    background-color: transparent;
+    background-image: url('{% static "img/background.jpg" %}');
+}
+header {
+    background-image: url('{% static "img/shade.png" %}');
+    background-size: auto;
+    background-position: bottom;
+}
+.content {
+    background-image: url('{% static "img/shade.png" %}');
+}
+.content .container {
+    max-width: 800px;
+    color: white;
+}
+.content form {
+    color: #444444;
+}
+h1, h2, h3, h4, h5, h6, p {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+form {
+    text-align: center;
+}
+.btn-group {
+    width: 200px;
+}
+.row {
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+</style>
+{% endblock %}
+
 {% block page_content %}
-    
-<h1>Pantry tells you what to cook.</h1>
-<h4>Get personalized meals based on your age and gender. It makes sure that you get the nutrients you need, from all the right food groups, in USDA recommended proportions.</h4>
+<div class="container">
+    <h1>Pantry tells you what to cook.</h1>
+    <h3>Get personalized meals based on your age and gender. All the right food groups, in recommended proportions.</h3>
 
+    <form method="post" action="dashboard" class="info">
 
-<form method="post" action="dashboard">
-    <div class="form-group">
-
-        <div class="row">
-            <div class="col-md-6 col-prefs text-center">
-                <label for="formGroupInputLarge">
-                Name
-                </label>
-            </div>
-            <div class="col-md-6 col-prefs">
+            <div class="row">
                 <label>
-                    <input type="text" class="form-control input" placeholder="" name="name">
+                    <input type="number" min="5" class="form-control input" placeholder="Age" name="age">
                 </label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-prefs text-center">
-                <label for="formGroupInputLarge">
-                Age
-                </label>
-            </div>
-            <div class="col-md-6 col-prefs">
-                <label>
-                    <input type="text" class="form-control input" placeholder="" name="age">
-                </label>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-prefs text-center">
-                <label for="formGroupInputLarge">
-                Gender
-                </label>
-            </div>
-            <div class="col-md-6 col-prefs">
                 <div class="btn-group btn-group-prefs" data-toggle="buttons">
                     <label class="btn btn-default btn-prefs">
                         <input type="radio" name="gender" value="m">Male
@@ -53,18 +61,11 @@
                     </label>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-prefs text-center">
-                <label for="formGroupInputLarge">
-                Style
-                </label>
-            </div>
-            <div class="col-md-6 col-prefs">
+            <div class="row">
                 <div class="btn-group btn-group-prefs" data-toggle="buttons">
                     <label class="btn btn-default btn-prefs">
                         <input type="radio" name="style" value="classic">
-                        Classic
+                        Everything
                     </label>
                     <label class="btn btn-default btn-prefs">
                         <input type="radio" name="style" value="vegetarian">
@@ -72,15 +73,12 @@
                     </label>
                 </div>
             </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-lg btn-submit">Plan my life!</button>
         </div>
-        <div class="row">
-        </div>
-    </div>
-    <div class="form-group top-buffer text-center">
-        <button type="submit" class="btn btn-lg btn-submit">Make my week</button>
-    </div>
 
-    {% csrf_token %}
-</form>
-
+        {% csrf_token %}
+    </form>
+    <h1></h1>
+</div>
 {% endblock %}
