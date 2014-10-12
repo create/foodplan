@@ -18,8 +18,7 @@ $(document).ready(function() {
         var msgBar = new MessageBar();
         // initialize it, it will create a message bar dom for later interact.
         msgBar.initialize();
-        console.log('click');
-        msgBar.show('Exporting to Evernote... Please wait.')
+        msgBar.show('Exporting to Evernote... Please wait.');
         $.get('/export', function(res) {
             msgBar.success('Exported to Evernote!');
         });

@@ -21,7 +21,7 @@ h1 {
 <!-- Main component for a primary marketing message or call to action -->
 <div>
     <h1 class="top-row">Cook these for dinner this week.</h1>
-    <button class="top-row evernote btn btn-success">Export week to Evernote<span class="glyphicon glyphicon-check"></span></button>
+    <button class="top-row evernote btn btn-success">Export week to Evernote <span class="glyphicon glyphicon-check"></span></button>
 </div>
     <div class="container-fluid">
         <div class="row">
@@ -50,7 +50,6 @@ h1 {
                                 <span class="meal-card-name card-{{ recipe.day_no }}">{{ recipe.name }}</span>
                                 <!--<button class="btn btn-info btn-ingredients"><span class="glyphicon glyphicon-list"></span></button>-->
                                 <span class="meal-card-price card-{{ recipe.day_no }}" id="pricetag">$<span class="num">{{ recipe.price }}</span></span>
-                                <button class="btn btn-success save"><span class="glyphicon glyphicon-heart-empty"></span></button>
                                 <button title="Try something else" class="btn btn-danger reroll reroll-{{ recipe.day_no }}" day_no="{{ recipe.day_no }}"><span class="glyphicon glyphicon-refresh"></span></button>
                             </div>
                         </div>
