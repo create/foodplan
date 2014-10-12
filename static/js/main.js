@@ -13,5 +13,14 @@ $(document).ready(function() {
            }
         });
     });
-
+    $('.evernote').click(function(e) {
+        // create an message bar instance
+        var msgBar = new MessageBar();
+        // initialize it, it will create a message bar dom for later interact.
+        msgBar.initialize();
+        msgBar.show('Exporting to Evernote... Please wait.');
+        $.get('/export', function(res) {
+            msgBar.success('Exported to Evernote!');
+        });
+    });
 });

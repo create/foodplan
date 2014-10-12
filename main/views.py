@@ -26,7 +26,9 @@ def signup(request):
 
 def pantry(request):
     page_info = {"page_title": "Your pantry"}
-    return render(request, 'pantry.html', {"page_info": page_info})
+    ingredients = Ingredient.objects.all()[:20]
+    return render(request, 'pantry.html', {"page_info": page_info,
+                                           "ingredients": ingredients})
 
 
 def about(request):
@@ -247,11 +249,12 @@ def export(request):
         # get their stuff from db
         user = User.objects.filter(id=request.session['unique_id']).first()
 
-    meals = ScheduledMeal.objects.filter(user_id=user.id).filter(date__gte=datetime.datetime.now().date()).extra(order_by=['date']).all()
+    meals = ScheduledMeal.objects.filter(user_id=user.id).filter(date__gte=datetime.datetime.now().date()).extra(order_by=['date']).all()[:4]
     print len(meals)
 
     exporter = EvernoteExporter(sandbox=True)
     exporter.import_meals(meals)
-
-    return HttpResponse("Done")
+    response = {}
+    response['result'] = 'Done'
+    return HttpResponse(json.dumps(response), content_type='application/json')
     # meal.recipe_id

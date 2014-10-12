@@ -5,11 +5,28 @@ h1 {
     margin-top: 0;
     margin-bottom: 30px;
 }
+.row .col-md-4 {
+    min-width: 400px;
+}
+.top-row {
+    display: inline-block;
+}
+.evernote {
+    float: right;
+
+}
 </style>
 {% endblock %}
 {% block page_content %}
 <!-- Main component for a primary marketing message or call to action -->
+<<<<<<< HEAD
 <h1>{{username}}, here is your weekly plan.</h1>
+=======
+<div>
+    <h1 class="top-row">Cook these for dinner this week.</h1>
+    <button class="top-row evernote btn btn-success">Export week to Evernote <span class="glyphicon glyphicon-check"></span></button>
+</div>
+>>>>>>> 3b279290ba81f745ae23fc258a8e745acb9f511f
     <div class="container-fluid">
         <div class="row">
             {% for recipe in recipes %}
@@ -37,7 +54,6 @@ h1 {
                                 <span class="meal-card-name card-{{ recipe.day_no }}">{{ recipe.name }}</span>
                                 <!--<button class="btn btn-info btn-ingredients"><span class="glyphicon glyphicon-list"></span></button>-->
                                 <span class="meal-card-price card-{{ recipe.day_no }}" id="pricetag">$<span class="num">{{ recipe.price }}</span></span>
-                                <button class="btn btn-success save"><span class="glyphicon glyphicon-heart-empty"></span></button>
                                 <button title="Try something else" class="btn btn-danger reroll reroll-{{ recipe.day_no }}" day_no="{{ recipe.day_no }}"><span class="glyphicon glyphicon-refresh"></span></button>
                             </div>
                         </div>

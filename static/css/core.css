@@ -121,7 +121,7 @@ input[type=number] {
 .meal-card-name {
     bottom: 5px;
     left: 10px;
-    max-width: 300px;
+    max-width: 320px;
 }
 .meal-card-price {
     top: 0px;
@@ -209,4 +209,7 @@ input[type=number] {
     font-style: italic;
     /*font-weight: bold;*/
     font-size: 22px;
+}
+input {
+    max-width: 600px;
 }
