@@ -6,8 +6,6 @@ urlpatterns = patterns('',
     # url(r'^$', 'foodplan.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^export/recipe/', 'evernote_export.views.export_recipe', name='export_recipe'),
-
     url(r'^admin', include(admin.site.urls)),
     url(r'^signin', 'main.views.signin'),
     url(r'^signup', 'main.views.signup'),
@@ -16,6 +14,6 @@ urlpatterns = patterns('',
     url(r'^pantry', 'main.views.pantry'),
     url(r'^improve', 'main.views.improve'),
     url(r'^about', 'main.views.about'),
-    url(r'^reroll', 'main.views.reroll')
-
+    url(r'^reroll', 'main.views.reroll'),
+    url(r'^export', 'main.views.export'),
 )
