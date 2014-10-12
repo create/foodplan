@@ -179,6 +179,19 @@ def dashboard(request):
         recipe.day = util.day_string(day)
         recipe.day_no = day
         day = (day + 1) % 7
+
+        try:
+            detailed_json = json.loads(recipe.detailed_json)
+            recipe.ingredient_lines = detailed_json["ingredientLines"]
+        except ValueError:
+            recipe.ingredient_lines = []
+
+        recipe.prep_time = recipe.prep_time_seconds / 60
+
+    #print recipe.detailed_json
+    #print recipe.prep_time_seconds
+
+
     total_price = "%.2f" % total_price
     page_info = {"page_title": "Dashboard"}
     return render(request, 'dashboard.html', {"page_info": page_info,

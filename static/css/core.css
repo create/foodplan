@@ -87,12 +87,12 @@ input[type=number] {
     box-shadow: 0 0 5px #888888;
     margin: 5px;
     display: inline-block;
+    cursor: pointer;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    cursor: default;
 }
 .meal-card-filter {
     background: -moz-linear-gradient(bottom,  rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%); /* FF3.6+ */
@@ -143,6 +143,20 @@ input[type=number] {
     font-size: 19px;
     opacity: .8;
 }
+
+.meal-card-factsheet {
+    /*color: #fff;*/
+    height: 100px;
+    overflow: hidden;
+    /*border: 1px solid black;*/
+    background: white;
+    display: none;
+    z-index: 5;
+    position: absolute;
+    /*cursor: default;*/
+
+}
+
 .reroll {
     position: absolute;
     bottom: 10px;
@@ -153,6 +167,12 @@ input[type=number] {
     position: absolute;
     bottom: 10px;
     right: 60px;
+}
+
+.btn-ingredients {
+    position: absolute;
+    bottom: 10px;
+    right: 110px;
 }
 
 #totalprice {
@@ -166,4 +186,28 @@ input[type=number] {
     font-size: 18px;
     margin-right: 10px;
     color: #ccc;
+}
+
+.preptime {
+    float: right;
+    position: relative;
+    margin: 20px;
+
+}
+
+.preptime-icon {
+    font-size: 18px;
+    position: relative;
+    top: 3px;
+    left: -2px;
+}
+
+.ingredients-label {
+    display: inline;
+    top: 15px;
+    left: 15px;
+    position: relative;
+    font-style: italic;
+    /*font-weight: bold;*/
+    font-size: 22px;
 }
