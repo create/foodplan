@@ -10,6 +10,7 @@
                             <div class="meal-card-filter">
                                 <span class="meal-card-day">{{ recipe.day }}</span>
                                 <span class="meal-card-name">{{ recipe.name }}</span>
+                                <span class="meal-card-price" id="pricetag">{{ recipe.price }}$</span>
                                 <button class="btn btn-success save"><span class="glyphicon glyphicon-heart-empty"></span></button>
                                 <button class="btn btn-danger reroll reroll-{{ recipe.day_no }}"><span class="glyphicon glyphicon-refresh"></span></button>
                             </div>
@@ -19,4 +20,16 @@
             {% endfor %}
         </div>
     </div><!-- /container-fluid -->
+
+{% endblock %}
+{% block extrascript %}
+
+<script type="text/javascript" charset="utf-8">
+    $(".meal-card").hover(function() {
+        $(this).find(".meal-card-price").fadeIn(100);
+    }, function(){
+        $(this).find(".meal-card-price").fadeOut(500);
+    });
+</script>
+
 {% endblock %}
