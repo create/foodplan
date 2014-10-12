@@ -34,82 +34,94 @@ def about(request):
 
 
 def improve(request):
-    if request.method == 'POST':
-        print request.POST
-        app_id = "e91111f8"
-        app_key = "f9d16213fe4a2371bb8c919c89dc409a"
-        recipe_id = request.POST['yummly-id']
+    show_success = False
+    show_error = False
+    show_already = False
+    try:
+        if request.method == 'POST':
+            print request.POST
+            app_id = "e91111f8"
+            app_key = "f9d16213fe4a2371bb8c919c89dc409a"
+            recipe_id = request.POST['yummly-id']
 
-        # extract actual recipe id if recipe_id is a url
-        if not re.match('^[\w-]+$', recipe_id):
-            print "rematch"
-            recipe_id = posixpath.basename(urlparse.urlsplit(recipe_id).path)
-            print recipe_id
+            # extract actual recipe id if recipe_id is a url
+            if not re.match('^[\w-]+$', recipe_id):
+                print "rematch"
+                recipe_id = posixpath.basename(urlparse.urlsplit(recipe_id).path)
+                print recipe_id
 
-        instructions = []
-        for i in range(1,5):
-            if request.POST['step-%d' % i]:
-                instructions.append(request.POST['step-%d' % i])
+            instructions = []
+            for i in range(1,5):
+                if request.POST['step-%d' % i]:
+                    instructions.append(request.POST['step-%d' % i])
 
-        instructions = json.dumps(instructions)
-        recipe_id_url = "http://api.yummly.com/v1/api/recipe/%s?_app_id=%s&_app_key=%s" % (recipe_id, app_id, app_key)
-        specific_res = requests.get(recipe_id_url)
-        if specific_res:
-            specific_res = specific_res.json()
-            print specific_res
+            instructions = json.dumps(instructions)
+            recipe_id_url = "http://api.yummly.com/v1/api/recipe/%s?_app_id=%s&_app_key=%s" % (recipe_id, app_id, app_key)
+            specific_res = requests.get(recipe_id_url)
+            if specific_res:
+                specific_res = specific_res.json()
+                print specific_res
 
-            terms = [specific_res['name']]
+                terms = [specific_res['name']]
 
-            recipe_url = "http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s" % (app_id, app_key)
+                recipe_url = "http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s" % (app_id, app_key)
 
-            for term in terms:
-                res = requests.get("%s&allowedCourse[]=&q=%s" % (recipe_url, term))
-                # print res.json()
-                if res.json() and res.json()['matches']:
-                    a = res.json()['matches'][0]
+                for term in terms:
+                    res = requests.get("%s&allowedCourse[]=&q=%s" % (recipe_url, term))
+                    # print res.json()
+                    if res.json() and res.json()['matches']:
+                        a = res.json()['matches'][0]
 
-                    servings = specific_res['numberOfServings']
+                        servings = specific_res['numberOfServings']
 
-                    recipe_id =  a["id"]
-                    recipe_name = a["recipeName"]
-                    recipe_image_url = a["smallImageUrls"][0] + "0"
-                    ingredients = a["ingredients"]
-                    ingredients = json.dumps(ingredients)
-                    is_vegetarian = (request.POST.get('meal_is_vegetarian', False) == 'on')
-                    print is_vegetarian
-                    price = int(request.POST['price'])
-                    # for meat in ['turkey', 'beef', 'meat', 'steak', 'chicken', 'pork', 'bacon', 'ham', 'duck', 'goose']:
-                    #     if any(meat in s for s in ingredients):
-                    #         is_vegetarian = False
+                        recipe_id =  a["id"]
+                        recipe_name = a["recipeName"]
+                        recipe_image_url = a["smallImageUrls"][0] + "0"
+                        ingredients = a["ingredients"]
+                        ingredients = json.dumps(ingredients)
+                        is_vegetarian = (request.POST.get('meal_is_vegetarian', False) == 'on')
+                        print is_vegetarian
+                        price = int(request.POST.get('price', 8) or 8)
+                        # for meat in ['turkey', 'beef', 'meat', 'steak', 'chicken', 'pork', 'bacon', 'ham', 'duck', 'goose']:
+                        #     if any(meat in s for s in ingredients):
+                        #         is_vegetarian = False
 
-                    prep_time_seconds = a["totalTimeInSeconds"]
-                    instructions = ["If you're cooking chicken for this, trim visible fat from 4 chicken breasts, then cut the chicken lengthwise into thirds.  Put the can of chicken stock, 2 cans of water, and the Italian Herb Blend into a small sauce pan and bring to a boil.  When it boils add chicken breasts, turn heat to medium low, and  let simmer 15-20 minutes, or until the chicken is cooked through.  Drain the chicken into a colander placed in the sink and let it cool.  (I saved the liquid in the freezer to add when I'm making chicken stock.)'In a large skillet, melt butter over medium; reserve 1 tablespoon in a small bowl. To skillet, add apples, 1/2 cup sugar, and cinnamon. Increase heat to medium-high; cook, tossing occasionally, until apples are tender and liquid has evaporated, about 15 minutes. Spread filling on a second rimmed baking sheet; let cool completely.",
-                                    "While the chicken cools, slice the basil leaves (and wash if needed), chop green onions, and measure the freshly-grated Parmesan. When it's cool, dice chicken into pieces about 3/4 inch square and place into medium-sized bowl.",
-                                    "Combine mayo and buttermilk, whisking until it's smooth.  Then stir in green onion, Parmesan, and basil. Add dressing to the chicken in the bowl and gently mix until chicken is well coated with dressing. Season with salt and fresh ground black pepper. This can be served immediately or chilled slightly before serving.  This will keep in the fridge for about a day, but it's best freshly made."]
-                    if not (prep_time_seconds and ingredients and recipe_id and recipe_name and recipe_image_url and prep_time_seconds):
-                        print "Not enough information, try a different recipe\n"
-                    else:
-                        if not Recipe.objects.filter(name=recipe_name):
-                            recipe = Recipe(name=recipe_name,
-                                            image_url=recipe_image_url,
-                                            ingredients_json=ingredients,
-                                            recipe_json=json.dumps(a),
-                                            detailed_json=json.dumps(specific_res),
-                                            prep_time_seconds=prep_time_seconds,
-                                            steps_json=instructions,
-                                            is_vegetarian=is_vegetarian,
-                                            price=price,
-                                            servings=servings)
-                            recipe.save()
+                        prep_time_seconds = a["totalTimeInSeconds"]
+                        instructions = ["If you're cooking chicken for this, trim visible fat from 4 chicken breasts, then cut the chicken lengthwise into thirds.  Put the can of chicken stock, 2 cans of water, and the Italian Herb Blend into a small sauce pan and bring to a boil.  When it boils add chicken breasts, turn heat to medium low, and  let simmer 15-20 minutes, or until the chicken is cooked through.  Drain the chicken into a colander placed in the sink and let it cool.  (I saved the liquid in the freezer to add when I'm making chicken stock.)'In a large skillet, melt butter over medium; reserve 1 tablespoon in a small bowl. To skillet, add apples, 1/2 cup sugar, and cinnamon. Increase heat to medium-high; cook, tossing occasionally, until apples are tender and liquid has evaporated, about 15 minutes. Spread filling on a second rimmed baking sheet; let cool completely.",
+                                        "While the chicken cools, slice the basil leaves (and wash if needed), chop green onions, and measure the freshly-grated Parmesan. When it's cool, dice chicken into pieces about 3/4 inch square and place into medium-sized bowl.",
+                                        "Combine mayo and buttermilk, whisking until it's smooth.  Then stir in green onion, Parmesan, and basil. Add dressing to the chicken in the bowl and gently mix until chicken is well coated with dressing. Season with salt and fresh ground black pepper. This can be served immediately or chilled slightly before serving.  This will keep in the fridge for about a day, but it's best freshly made."]
+                        if not (prep_time_seconds and ingredients and recipe_id and recipe_name and recipe_image_url and prep_time_seconds):
+                            print "Not enough information, try a different recipe\n"
                         else:
-                            print "ignoring duplicate\n"
-                else:
-                    print "err\n"
-        else:
-            print "err\n"
-
+                            if not Recipe.objects.filter(name=recipe_name):
+                                recipe = Recipe(name=recipe_name,
+                                                image_url=recipe_image_url,
+                                                ingredients_json=ingredients,
+                                                recipe_json=json.dumps(a),
+                                                detailed_json=json.dumps(specific_res),
+                                                prep_time_seconds=prep_time_seconds,
+                                                steps_json=instructions,
+                                                is_vegetarian=is_vegetarian,
+                                                price=price,
+                                                servings=servings)
+                                recipe.save()
+                                show_success=True
+                            else:
+                                print "ignoring duplicate\n"
+                                show_already = True
+                    else:
+                        print "err\n"
+                        show_error = True
+            else:
+                print "err\n"
+                show_error = True
+    except:
+        show_error = True
     page_info = {"page_title": "Improve"}
-    return render(request, 'improve.html', {"page_info": page_info})
+    return render(request, 'improve.html', {"page_info": page_info,
+                                            "show_success": show_success,
+                                            "show_error": show_error,
+                                            "show_already": show_already})
 
 
 def dashboard(request):
