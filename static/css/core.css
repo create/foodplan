@@ -33,10 +33,13 @@ header {
     margin-left: auto;
     margin-right: auto;
 }
+.content > h1:first-child {
+    margin-top: 0;
+}
 
 footer {
     background: #ffffff;
-    color: #cccccc;
+    color: #aaaaaa;
     height: 100px;
     width: 100%;
     text-align: center;
@@ -50,7 +53,7 @@ footer > p {
 }
 
 footer a {
-    color: #aaaaaa;
+    color: #999999;
 }
 input[type=number] {
     width: 190px;
@@ -176,13 +179,12 @@ input[type=number] {
     top: 38px;
     position: absolute;
     color: #ccc;
-
 }
+
 #totalprice-label {
     font-size: 18px;
     margin-right: 10px;
-    color: #999;
-
+    color: #ccc;
 }
 
 .preptime {

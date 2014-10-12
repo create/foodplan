@@ -4,6 +4,7 @@ from djorm_pgarray.fields import ArrayField
 from djorm_expressions.models import ExpressionManager
 
 class User(models.Model):
+    # Tablenames don't actually do anything for migrate. Just FYI
     __tablename__ = 'main_user'
     is_vegetarian = models.BooleanField(default=False)
     # 1 male 0 female
@@ -37,7 +38,6 @@ class Recipe(models.Model):
 
 class Ingredient(models.Model):
     __tablename__ = 'main_ingredient'
-    id = models.IntegerField(primary_key=True)
 
     # Name which should match with our recipes. i.e. 'butter'
     name = models.CharField(max_length=255)
@@ -97,3 +97,8 @@ class Ingredient(models.Model):
     gmwt_desc2 = models.CharField(max_length=255)
     refuse_pct = models.DecimalField(max_digits=10, decimal_places=5)
     foodgroup = models.IntegerField()
+
+class UserIngredient(models.Model):
+    __tablename__ = 'main'
+    user_id = models.ForeignKey(User)
+    ingredient_id = models.IntegerField(default=1001)

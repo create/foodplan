@@ -3,7 +3,9 @@
 
 {% block page_content %}
     <h1>Make The Pantry better.</h1>
-    <h4>Improve our recipes and ingredient database.</h4>
+    <h4>We'd like to know which recipes you want to see on the site.</h4>
+    <h4>Improve our recipes and ingredient database by adding recipes and preparation steps from Yummly.</h4>
+
     <h2>Add a recipe</h2>
     <form action="/improve" method="post">
         {% csrf_token %}
@@ -16,7 +18,7 @@
             <input type="text" class="form-control input-lg" placeholder="Step 3 (optional)" name="step-3"></label>
             <input type="text" class="form-control input-lg" placeholder="Step 4 (optional)" name="step-4"></label>
             <input type="number" name="price" class="form-control input-md" placeholder="price">
-            <label>Vegetarian<input style="margin-left: 5px;" type="checkbox" name="meal_is_vegetarian"></label>
+            <label style="margin-top: 10px;">Vegetarian<input style="margin-left: 5px;" type="checkbox" name="meal_is_vegetarian"></label>
 
         </div>
         <div class="form-group">
@@ -24,4 +26,25 @@
         </div>
     </form>
 
+{% endblock %}
+
+{% block extrascript %}
+{% if show_success or show_error or show_already %}
+    <script type="application/javascript">
+        $(document).ready(function() {
+            // create an message bar instance
+            var msgBar = new MessageBar();
+
+            // initialize it, it will create a message bar dom for later interact.
+            msgBar.initialize();
+            {% if show_success %}
+                msgBar.success('Recipe added!');
+            {% elif show_error %}
+                    msgBar.alert("The recipe doesn't have enough data. Please try a different one!");
+            {% else %}
+                msgBar.show("We already have that recipe!");
+            {% endif %}
+        });
+    </script>
+{% endif %}
 {% endblock %}

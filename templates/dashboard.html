@@ -9,7 +9,7 @@ h1 {
 {% endblock %}
 {% block page_content %}
 <!-- Main component for a primary marketing message or call to action -->
-<h1>Cook these this week.</h1>
+<h1>Cook these for dinner this week.</h1>
     <div class="container-fluid">
         <div class="row">
             {% for recipe in recipes %}
@@ -78,5 +78,5 @@ $(document).ready(function() {
 
 {% endblock %}
 {% block totalprice %}
-<span id="totalprice"><span id="totalprice-label">Weekly total</span> {{total_price}}$</span>
+<span id="totalprice"><span id="totalprice-label">Weekly total:</span> {{total_price}}$</span>
 {% endblock %}

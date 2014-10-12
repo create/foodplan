@@ -1,12 +1,51 @@
 {% extends "base_layout.html" %}
 {% load staticfiles %}
 
-{% block title %}Home{% endblock %}
+{% block custom_css %}
+<style>
+body {
+    background-color: transparent;
+    background-image: url('{% static "img/background.jpg" %}');
+}
+header {
+    background-image: url('{% static "img/shade.png" %}');
+    background-size: auto;
+    background-position: bottom;
+}
+.content {
+    background-image: url('{% static "img/shade.png" %}');
+}
+.content .container {
+    max-width: 800px;
+    color: white;
+}
+.content form {
+    color: #444444;
+}
+h1, h2, h3, h4, h5, h6, p {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+form {
+    text-align: center;
+}
+.btn-group {
+    width: 200px;
+}
+.row {
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+.space {
+    height: 100px;
+}
+</style>
+{% endblock %}
 
 {% block page_content %}
 
-    
-<h1>Everyone knows it's important to eat healthy. The hard part is staying on top of it.</h1>
-{% include "how_it_works.html" %}
-
+<div class="container">
+    <h1>Everyone knows it's important to eat healthy. The hard part is staying on top of it.</h1>
+    {% include "how_it_works.html" %}
+</div>
 {% endblock %}
