@@ -7,6 +7,9 @@ $(document).ready(function() {
                image.css('backgroundImage', 'url("' + res.result.image_url + '")');
                $('.meal-card-name', image).text(res.result.name);
                $('.meal-card-price .num', image).text(res.result.price);
+               var oldPrice = $('#totalpriceval').text();
+               var newPrice = parseFloat(oldPrice) + parseFloat(res.result.total_price_change);
+               $('#totalpriceval').text(newPrice.toFixed(2));
            } else {
                console.log("Error rerolling!");
                console.log(res);
