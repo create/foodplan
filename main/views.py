@@ -156,9 +156,9 @@ def dashboard(request):
         ids_to_exclude = (recipe.id for recipe in recipes)
         if not meal:
             if not user.is_vegetarian:
-                recipe_id = Recipe.objects.exclude(id__in=ids_to_exclude).order_by('?').first()
+                recipe_id = _get_random_recipe(False, ids_to_exclude)
             else:
-                recipe_id = Recipe.objects.exclude(id__in=ids_to_exclude).filter(is_vegetarian=True).order_by('?').first()
+                recipe_id = _get_random_recipe(True, ids_to_exclude)
 
             if recipe_id:
                 recipe_id = recipe_id.id
@@ -177,3 +177,26 @@ def dashboard(request):
     page_info = {"page_title": "Dashboard"}
     return render(request, 'dashboard.html', {"page_info": page_info,
                                               "recipes": recipes})
+
+def _get_random_recipe(is_vegetarian=False, ids_to_exclude=None):
+    if not ids_to_exclude:
+        ids_to_exclude = []
+    if is_vegetarian:
+        return Recipe.objects.filter(is_vegetarian=True).exclude(id__in=ids_to_exclude).order_by('?').first()
+    else:
+        return Recipe.objects.exclude(id__in=ids_to_exclude).order_by('?').first()
+
+def reroll(request):
+    response = {}
+    response['result'] = 'error'
+    if request.GET.get('day', False):
+        day = int(request.GET.get('day'))
+        today = datetime.datetime.now().date()
+        delta = (day - today.weekday()) % 7
+        day_to_reroll = today + datetime.timedelta(days=delta)
+        meal = ScheduledMeal.objects.filter(date=day_to_reroll).first()
+        recipe = _get_random_recipe(User.get(request.session.get('unique_id')).is_vegetarian)
+        meal.recipe_id = recipe.id
+        meal.save()
+        response['result'] = recipe
+    return HttpResponse(json.dumps(response))
