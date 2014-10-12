@@ -151,6 +151,7 @@ input[type=number] {
     z-index: 5;
     position: absolute;
     /*cursor: default;*/
+    width: 100%;
 
 }
 
