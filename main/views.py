@@ -160,7 +160,7 @@ def dashboard(request):
     today = now.date()
     recipes = []
     for i in range(0, num_to_show):
-        meal = ScheduledMeal.objects.filter(date=today).first()
+        meal = ScheduledMeal.objects.filter(date=today).filter(user_id=user.id).first()
         ids_to_exclude = (recipe.id for recipe in recipes)
         if not meal:
             if not user.is_vegetarian:
@@ -198,13 +198,19 @@ def reroll(request):
     response = {}
     response['result'] = 'error'
     if request.GET.get('day', False):
+        user = User.objects.filter(id=request.session.get('unique_id')).first()
         day = int(request.GET.get('day'))
         today = datetime.datetime.now().date()
         delta = (day - today.weekday()) % 7
         day_to_reroll = today + datetime.timedelta(days=delta)
-        meal = ScheduledMeal.objects.filter(date=day_to_reroll).first()
-        recipe = _get_random_recipe(User.get(request.session.get('unique_id')).is_vegetarian)
+        meal = ScheduledMeal.objects.filter(date=day_to_reroll).filter(user_id=user.id).first()
+        recipe = _get_random_recipe(user.is_vegetarian)
         meal.recipe_id = recipe.id
         meal.save()
-        response['result'] = recipe
-    return HttpResponse(json.dumps(response))
+        response['result'] = {'image_url': recipe.image_url,
+            'name': recipe.name,
+            'price': str(recipe.price),
+            'total_price': str(recipe.price) # TODO make real price
+        }
+
+    return HttpResponse(json.dumps(response), content_type='application/json')
