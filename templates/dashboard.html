@@ -19,14 +19,10 @@ h1 {
 {% endblock %}
 {% block page_content %}
 <!-- Main component for a primary marketing message or call to action -->
-<<<<<<< HEAD
-<h1>{{username}}, here is your weekly plan.</h1>
-=======
 <div>
-    <h1 class="top-row">Cook these for dinner this week.</h1>
+    <h1 class="top-row">{{username}}, here is your weekly plan.</h1>
     <button class="top-row evernote btn btn-success">Export week to Evernote <span class="glyphicon glyphicon-check"></span></button>
 </div>
->>>>>>> 3b279290ba81f745ae23fc258a8e745acb9f511f
     <div class="container-fluid">
         <div class="row">
             {% for recipe in recipes %}
