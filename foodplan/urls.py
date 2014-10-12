@@ -14,6 +14,6 @@ urlpatterns = patterns('',
     url(r'^pantry', 'main.views.pantry'),
     url(r'^improve', 'main.views.improve'),
     url(r'^about', 'main.views.about'),
-    url(r'^reroll', 'main.views.reroll')
-
+    url(r'^reroll', 'main.views.reroll'),
+    url(r'^export', 'main.views.export'),
 )

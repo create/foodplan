@@ -126,7 +126,6 @@ input[type=number] {
 .meal-card-price {
     top: 0px;
     right: 10px;
-    /*font-weight: bold;*/
     font-size: 32px;
     display: none;
 }
@@ -145,15 +144,14 @@ input[type=number] {
 }
 
 .meal-card-factsheet {
-    /*color: #fff;*/
-    height: 100px;
+    height: 0;
     overflow: hidden;
-    /*border: 1px solid black;*/
     background: white;
     display: none;
     z-index: 5;
     position: absolute;
     /*cursor: default;*/
+    width: 100%;
 
 }
 
