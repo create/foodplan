@@ -15,7 +15,7 @@ class User(models.Model):
 class ScheduledMeal(models.Model):
     __tablename__ = 'main_scheduled_meal'
     recipe_id = models.IntegerField()
-    date = models.DateField(default=datetime.datetime.now())
+    date = models.DateField(default=datetime.date.today)
     user_id = models.IntegerField(default=0)
 
 class Recipe(models.Model):
@@ -27,7 +27,9 @@ class Recipe(models.Model):
     steps_json = models.TextField(default='')
     ingredients_json = models.TextField(default='')
     recipe_json = models.TextField(default='')
+    detailed_json = models.TextField(default='')
     servings = models.IntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=5.0)
     is_vegetarian = models.BooleanField(default=True)
     objects = ExpressionManager()
 

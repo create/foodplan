@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 import requests
-from models import Recipe, Ingredient, User
+from models import Recipe, Ingredient, User, ScheduledMeal
 import util, forms
 
 def home(request):
@@ -59,10 +59,10 @@ def improve(request):
 
             for term in terms:
                 res = requests.get("%s&allowedCourse[]=&q=%s" % (recipe_url, term))
-                print res.json()
+                # print res.json()
                 if res.json() and res.json()['matches']:
                     a = res.json()['matches'][0]
-                    print a
+
                     servings = specific_res['numberOfServings']
 
                     recipe_id =  a["id"]
@@ -70,11 +70,13 @@ def improve(request):
                     recipe_image_url = a["smallImageUrls"][0] + "0"
                     ingredients = a["ingredients"]
                     ingredients = json.dumps(ingredients)
+                    is_vegetarian = (request.POST.get('meal_is_vegetarian', False) == 'on')
+                    print is_vegetarian
+                    price = int(request.POST['price'])
+                    # for meat in ['turkey', 'beef', 'meat', 'steak', 'chicken', 'pork', 'bacon', 'ham', 'duck', 'goose']:
+                    #     if any(meat in s for s in ingredients):
+                    #         is_vegetarian = False
 
-                    is_vegetarian = True
-                    for meat in ['turkey', 'beef', 'meat', 'steak', 'chicken', 'pork', 'bacon', 'ham', 'duck', 'goose']:
-                        if any(meat in s for s in ingredients):
-                            is_vegetarian = False
                     prep_time_seconds = a["totalTimeInSeconds"]
                     instructions = ["If you're cooking chicken for this, trim visible fat from 4 chicken breasts, then cut the chicken lengthwise into thirds.  Put the can of chicken stock, 2 cans of water, and the Italian Herb Blend into a small sauce pan and bring to a boil.  When it boils add chicken breasts, turn heat to medium low, and  let simmer 15-20 minutes, or until the chicken is cooked through.  Drain the chicken into a colander placed in the sink and let it cool.  (I saved the liquid in the freezer to add when I'm making chicken stock.)'In a large skillet, melt butter over medium; reserve 1 tablespoon in a small bowl. To skillet, add apples, 1/2 cup sugar, and cinnamon. Increase heat to medium-high; cook, tossing occasionally, until apples are tender and liquid has evaporated, about 15 minutes. Spread filling on a second rimmed baking sheet; let cool completely.",
                                     "While the chicken cools, slice the basil leaves (and wash if needed), chop green onions, and measure the freshly-grated Parmesan. When it's cool, dice chicken into pieces about 3/4 inch square and place into medium-sized bowl.",
@@ -87,9 +89,11 @@ def improve(request):
                                             image_url=recipe_image_url,
                                             ingredients_json=ingredients,
                                             recipe_json=json.dumps(a),
+                                            detailed_json=json.dumps(specific_res),
                                             prep_time_seconds=prep_time_seconds,
                                             steps_json=instructions,
                                             is_vegetarian=is_vegetarian,
+                                            price=price,
                                             servings=servings)
                             recipe.save()
                         else:
@@ -139,16 +143,33 @@ def dashboard(request):
     # print "User prefs: %s, %s, %s" % (user_age, user_gender, user_style)
     #TODO: do some math with the preferences
 
-
-    day = datetime.datetime.now().weekday()
+    now = datetime.datetime.now()
+    day = now.weekday()
 
     num_to_show = 7
 
-    # TODO orderby ? is slow
-    if user.is_vegetarian:
-        recipes = Recipe.objects.order_by('?')[:num_to_show]
-    else:
-        recipes = Recipe.objects.filter(is_vegetarian=True).order_by('?')[:num_to_show]
+    # TODO orderby('?') is slow
+    today = now.date()
+    recipes = []
+    for i in range(0, num_to_show):
+        meal = ScheduledMeal.objects.filter(date=today).first()
+        ids_to_exclude = (recipe.id for recipe in recipes)
+        if not meal:
+            if not user.is_vegetarian:
+                recipe_id = Recipe.objects.exclude(id__in=ids_to_exclude).order_by('?').first()
+            else:
+                recipe_id = Recipe.objects.exclude(id__in=ids_to_exclude).filter(is_vegetarian=True).order_by('?').first()
+
+            if recipe_id:
+                recipe_id = recipe_id.id
+                meal = ScheduledMeal(date=today, user_id=user.id, recipe_id=recipe_id)
+                meal.save()
+        if meal:
+            recipe = Recipe.objects.filter(id=meal.recipe_id).first()
+            if recipe:
+                recipes.append(recipe)
+        today = today + datetime.timedelta(days=1)
+
     for recipe in recipes:
         recipe.day = util.day_string(day)
         recipe.day_no = day
