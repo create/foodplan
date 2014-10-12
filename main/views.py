@@ -10,10 +10,7 @@ import re, posixpath, urlparse
 
 def home(request):
     page_info = {"page_title": "Home"}
-    if all(info in request.session for info in ['age', 'gender', 'style']):
-        return redirect('/dashboard')
-    else:
-        return render(request, 'home.html', {"page_info": page_info})
+    return render(request, 'home.html', {"page_info": page_info})
 
 
 def signin(request):
