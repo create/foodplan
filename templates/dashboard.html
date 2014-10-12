@@ -62,6 +62,12 @@ $(document).ready(function() {
     $(".meal-card").click(function() {
         $(this).find(".meal-card-factsheet").show().animate({height: "100%"});
     });
+
+    $(".meal-card-factsheet").click(function() {
+        $(this).animate({height: 0});
+    });
+
+
 });
 </script>
 
