@@ -145,7 +145,7 @@ input[type=number] {
 
 .meal-card-factsheet {
     height: 0;
-    overflow: hidden;
+    overflow-y: scroll;
     background: white;
     display: none;
     z-index: 5;
