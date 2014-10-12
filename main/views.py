@@ -2,7 +2,6 @@ import json
 import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import redirect
 import requests
 from models import Recipe, Ingredient, User, ScheduledMeal
 import util, forms
@@ -138,31 +137,22 @@ def dashboard(request):
         user = User()
         user.save()
         request.session['unique_id'] = user.id
-        #request.session['mouths'] = request.POST.get('mouths', 1)
-        try:
-            request.session['age'] = request.POST.get('age', 1)
-        except ValueError:
-            request.session['age'] = 1
-
-        request.session['name'] = request.POST.get('name', 'Hi')
 
         try:
-            request.session['gender'] = request.POST.get('gender', 'm')
-        except ValueError:
-            request.session['gender'] = 'm'
+            request.session['age'] = int(request.POST.get('age', 20) or 20)
+        except:
+            request.session['age'] = 20
 
-        try:
-            request.session['style'] = request.POST.get('style', 'classic')
-        except ValueError:
-            request.session['style'] = 'classic'
+        request.session['name'] = request.POST.get('name', 'Hi') or 'Hi'
 
-        if request.session['name'] == '':
-            request.session['name'] = "Hi"
+        request.session['gender'] = request.POST.get('gender', 'm')
+
+        request.session['style'] = request.POST.get('style', 'classic')
 
         # save user in db
-        user.is_vegetarian = (request.POST.get('style', 'classic') == "vegetarian");
-        user.age = int(request.POST.get('age', 1));
-        user.gender = int(request.POST.get('gender', 'm') == 'm');
+        user.is_vegetarian = (request.POST.get('style', 'classic') == "vegetarian")
+        user.age = int(request.session.get('age', 20) or 20)
+        user.gender = int(request.POST.get('gender', 'm') == 'm')
         user.save()
     elif request.session.get('unique_id'):
         # get their stuff from db
@@ -170,15 +160,6 @@ def dashboard(request):
     else:
         user = User()
         user.save()
-    # redirect if preferences are not available via session
-    # elif not all(info in request.session for info in ['age', 'gender', 'style']):
-    #     return redirect('/')
-    #
-    # user_age = request.session['age']
-    # user_gender = request.session['gender']
-    # user_style = request.session['style']
-    # print "User prefs: %s, %s, %s" % (user_age, user_gender, user_style)
-    #TODO: do some math with the preferences
 
     now = datetime.datetime.now()
     day = now.weekday()
@@ -222,9 +203,6 @@ def dashboard(request):
 
         recipe.prep_time = recipe.prep_time_seconds / 60
 
-    #print recipe.detailed_json
-    #print recipe.prep_time_seconds
-
 
     total_price = "%.2f" % total_price
     page_info = {"page_title": "Dashboard"}
@@ -257,7 +235,7 @@ def reroll(request):
         response['result'] = {'image_url': recipe.image_url,
             'name': recipe.name,
             'price': str(recipe.price),
-            'total_price_change': str(recipe.price - old_recipe.price) # TODO make real price
+            'total_price_change': str(recipe.price - old_recipe.price)
         }
 
     return HttpResponse(json.dumps(response), content_type='application/json')
@@ -276,4 +254,3 @@ def export(request):
     response = {}
     response['result'] = 'Done'
     return HttpResponse(json.dumps(response), content_type='application/json')
-    # meal.recipe_id
