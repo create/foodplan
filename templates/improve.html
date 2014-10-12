@@ -8,7 +8,7 @@
     <form action="/improve" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <input type="text" class="form-control input-lg yummly-id" placeholder="Yummly ID / URL" name="yummly-id"></label>
+            <input type="text" class="form-control input-lg yummly-id" placeholder="Yummly Recipe ID / URL" name="yummly-id"></label>
         </div>
         <div class="form-group">
             <input type="text" class="form-control input-lg" placeholder="Preparation Step 1" name="step-1"></label>
@@ -24,8 +24,4 @@
         </div>
     </form>
 
-    <h2>Ingredients</h2>
-    {% for ingredient in page_info.ingredients %}
-        <p>{{ ingredient.description }}</p>
-    {% endfor %}
 {% endblock %}

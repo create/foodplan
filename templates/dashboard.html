@@ -1,8 +1,15 @@
 {% extends "base_layout.html" %}
+{% block custom_css %}
+<style>
+h1 {
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+</style>
+{% endblock %}
 {% block page_content %}
 <!-- Main component for a primary marketing message or call to action -->
-<h1>Dashboard</h1>
-<h4>This is your weekly plan!</h4>
+<h1>Cook these this week.</h1>
     <div class="container-fluid">
         <div class="row">
             {% for recipe in recipes %}
@@ -28,10 +35,14 @@
                                 </div>
                                 <span class="meal-card-day card-{{ recipe.day_no }}">{{ recipe.day }}</span>
                                 <span class="meal-card-name card-{{ recipe.day_no }}">{{ recipe.name }}</span>
+<<<<<<< HEAD
                                 <span class="meal-card-price card-{{ recipe.day_no }}" id="pricetag">{{ recipe.price }}$</span>
                                 <!--<button class="btn btn-info btn-ingredients"><span class="glyphicon glyphicon-list"></span></button>-->
+=======
+                                <span class="meal-card-price card-{{ recipe.day_no }}" id="pricetag">$<span class="num">{{ recipe.price }}</span></span>
+>>>>>>> 4281e23fc50e0b34084ecb4fc1915064228a680e
                                 <button class="btn btn-success save"><span class="glyphicon glyphicon-heart-empty"></span></button>
-                                <button class="btn btn-danger reroll reroll-{{ recipe.day_no }}" day_no="{{ recipe.day_no }}"><span class="glyphicon glyphicon-refresh"></span></button>
+                                <button title="Try something else" class="btn btn-danger reroll reroll-{{ recipe.day_no }}" day_no="{{ recipe.day_no }}"><span class="glyphicon glyphicon-refresh"></span></button>
                             </div>
                         </div>
                     </div>
@@ -44,20 +55,21 @@
 {% block extrascript %}
 
 <script type="text/javascript" charset="utf-8">
-    $(".meal-card").hover(function() {
-        $(this).find(".meal-card-filter").animate({"background-color": "rgba(0,0,0,0.4)"}, 500);
+$(document).ready(function() {
+    $(".meal-card").mouseenter(function () {
+        $(this).find(".meal-card-filter").animate({"background-color": "rgba(0,0,0,0.4)"}, 400);
         $(this).find(".meal-card-price").stop().fadeIn(100);
-    }, function(){
-        $(this).find(".meal-card-filter").css({"background": "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%)"});
-        $(this).find(".meal-card-price").fadeOut(1000);
+    }).mouseleave(function () {
+        $(this).find(".meal-card-filter").stop().css({"background": "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%)"});
+        $(this).find(".meal-card-price").fadeOut(600);
     });
-
     $(".meal-card").click(function() {
         $(this).find(".meal-card-factsheet").show().animate({height: "100%"});
     });
+});
 </script>
 
 {% endblock %}
 {% block totalprice %}
-<span id="totalprice"><span id="totalprice-label">Total price</span> {{total_price}}$</span>
+<span id="totalprice"><span id="totalprice-label">Weekly total</span> {{total_price}}$</span>
 {% endblock %}

@@ -1,8 +1,6 @@
 {% extends "base_layout.html" %}
 {% load staticfiles %}
 
-{% block title %}Home{% endblock %}
-
 {% block custom_css %}
 <style>
 body {
@@ -10,7 +8,7 @@ body {
     background-image: url('{% static "img/background.jpg" %}');
 }
 header {
-    background-image: url('{% static "img/small_steps.png" %}');
+    background-image: url('{% static "img/shade.png" %}');
     background-size: auto;
     background-position: bottom;
 }
@@ -38,21 +36,25 @@ form {
     margin-bottom: 30px;
     margin-top: 30px;
 }
+.space {
+    height: 100px;
+}
 </style>
 {% endblock %}
 
 {% block page_content %}
 <div class="container">
     <h1>Pantry tells you what to cook.</h1>
-    <h4>Get personalized meals based on your age and gender. The nutrients you need are provided for you, from all the right food groups, in USDA recommended proportions.</h4>
-
+    <h3>Get personalized meals based on your age and gender. All the right food groups, in recommended proportions.</h3>
 
     <form method="post" action="dashboard" class="info">
 
             <div class="row">
                 <label>
-                    <input type="number" min="5" class="form-control input" placeholder="Age" name="age">
+                    <input type="number" min="1" class="form-control input" placeholder="# of mouths to feed" name="mouths">
                 </label>
+            </div>
+            <div class="row">
                 <div class="btn-group btn-group-prefs" data-toggle="buttons">
                     <label class="btn btn-default btn-prefs">
                         <input type="radio" name="gender" value="m">Male
@@ -75,10 +77,13 @@ form {
                 </div>
             </div>
         <div class="form-group text-center">
-            <button type="submit" class="btn btn-lg btn-submit">Plan my life!</button>
+            <button type="submit" class="btn btn-lg btn-submit">Let's go!</button>
         </div>
 
         {% csrf_token %}
     </form>
+    <div class="space"></div>
+    {% include "how_it_works.html" %}
+
 </div>
 {% endblock %}

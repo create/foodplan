@@ -53,9 +53,8 @@ footer a {
     color: #aaaaaa;
 }
 input[type=number] {
-    width: 80px;
+    width: 190px;
 }
-
 
 .top-buffer {
     margin-top: 100px;
@@ -86,6 +85,11 @@ input[type=number] {
     margin: 5px;
     display: inline-block;
     cursor: pointer;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .meal-card-filter {
     background: -moz-linear-gradient(bottom,  rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%); /* FF3.6+ */
@@ -114,6 +118,7 @@ input[type=number] {
 .meal-card-name {
     bottom: 5px;
     left: 10px;
+    max-width: 300px;
 }
 .meal-card-price {
     top: 0px;
