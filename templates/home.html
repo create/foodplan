@@ -10,7 +10,7 @@ body {
     background-image: url('{% static "img/background.jpg" %}');
 }
 header {
-    background-image: url('{% static "img/small_steps.png" %}');
+    background-image: url('{% static "img/shade.png" %}');
     background-size: auto;
     background-position: bottom;
 }
@@ -44,8 +44,7 @@ form {
 {% block page_content %}
 <div class="container">
     <h1>Pantry tells you what to cook.</h1>
-    <h4>Get personalized meals based on your age and gender. The nutrients you need are provided for you, from all the right food groups, in USDA recommended proportions.</h4>
-
+    <h3>Get personalized meals based on your age and gender. All the right food groups, in recommended proportions.</h3>
 
     <form method="post" action="dashboard" class="info">
 
@@ -80,5 +79,6 @@ form {
 
         {% csrf_token %}
     </form>
+    <h1></h1>
 </div>
 {% endblock %}
