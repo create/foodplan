@@ -245,7 +245,7 @@ def export(request):
         # get their stuff from db
         user = User.objects.filter(id=request.session['unique_id']).first()
 
-    meals = ScheduledMeal.objects.filter(user_id=user.id).filter(date__gte=datetime.datetime.now().date()).extra(order_by=['date']).all()
+    meals = ScheduledMeal.objects.filter(user_id=user.id).filter(date__gte=datetime.datetime.now().date()).extra(order_by=['date']).all()[:4]
     print len(meals)
 
     exporter = EvernoteExporter(sandbox=True)
