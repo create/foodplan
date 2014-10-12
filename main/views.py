@@ -273,7 +273,7 @@ def export(request):
     meals = ScheduledMeal.objects.filter(user_id=user.id).filter(date__gte=datetime.datetime.now().date()).extra(order_by=['date']).all()[:4]
     print len(meals)
 
-    exporter = EvernoteExporter(sandbox=True)
+    exporter = EvernoteExporter(sandbox=False)
     exporter.import_meals(meals)
     response = {}
     response['result'] = 'Done'
