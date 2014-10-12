@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 import requests
-from models import Recipe, Ingredient, User
+from models import Recipe, Ingredient, User, ScheduledMeal
 import util, forms
 
 def home(request):
@@ -143,16 +143,31 @@ def dashboard(request):
     # print "User prefs: %s, %s, %s" % (user_age, user_gender, user_style)
     #TODO: do some math with the preferences
 
-
-    day = datetime.datetime.now().weekday()
+    now = datetime.datetime.now()
+    day = now.weekday()
 
     num_to_show = 7
 
-    # TODO orderby ? is slow
-    if user.is_vegetarian:
-        recipes = Recipe.objects.order_by('?')[:num_to_show]
-    else:
-        recipes = Recipe.objects.filter(is_vegetarian=True).order_by('?')[:num_to_show]
+    # TODO orderby('?') is slow
+    today = now.date()
+    recipes = []
+    for i in range(0, num_to_show):
+        meal = ScheduledMeal.objects.filter(date=today)
+        ids_to_exclude = (recipe.id for recipe in recipes)
+        if not meal:
+            if not user.is_vegetarian:
+                recipe_id = Recipe.objects.exclude(id__in=ids_to_exclude).order_by('?').first()
+            else:
+                recipe_id = Recipe.objects.exclude(id__in=ids_to_exclude).filter(is_vegetarian=True).order_by('?').first()
+
+            if recipe_id:
+                recipe_id = recipe_id.id
+                meal = ScheduledMeal(date=today, user_id=user.id, recipe_id=recipe_id)
+                meal.save()
+        if meal:
+            recipes.append(meal)
+        today = today + datetime.timedelta(days=1)
+
     for recipe in recipes:
         recipe.day = util.day_string(day)
         recipe.day_no = day

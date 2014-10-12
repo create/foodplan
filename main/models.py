@@ -15,7 +15,7 @@ class User(models.Model):
 class ScheduledMeal(models.Model):
     __tablename__ = 'main_scheduled_meal'
     recipe_id = models.IntegerField()
-    date = models.DateField(default=datetime.datetime.now())
+    date = models.DateField(default=datetime.date.today)
     user_id = models.IntegerField(default=0)
 
 class Recipe(models.Model):
