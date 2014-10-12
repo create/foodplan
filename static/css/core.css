@@ -147,5 +147,14 @@ input[type=number] {
 
 #totalprice {
     font-size: 22px;
+    right: 35px;
+    top: 38px;
+    position: absolute;
+
+}
+#totalprice-label {
+    font-size: 18px;
+    margin-right: 10px;
+    color: #666;
 
 }
