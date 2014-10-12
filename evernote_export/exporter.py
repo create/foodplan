@@ -118,11 +118,14 @@ class EvernoteExporter():
 
     def import_meals(self, meals_list):
         for meal in meals_list:
+            recipe = Recipe.objects.get(pk=meal.recipe_id)
             # TODO uncomment this section
-            # self.export_recipe(meal)
-            il = json.loads(meal.ingredients_json)
+            self.export_recipe(recipe)
+            il = json.loads(recipe.ingredients_json)
             for i in il:
                 self._add_to_ingredient_list(i)
+            print recipe.name + " | " + str(meal.date)
+
 
         self.export_grocery_list()
 

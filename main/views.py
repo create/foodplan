@@ -7,6 +7,7 @@ import requests
 from models import Recipe, Ingredient, User, ScheduledMeal
 import util, forms
 import re, posixpath, urlparse
+from evernote_export.exporter import EvernoteExporter
 
 def home(request):
     page_info = {"page_title": "Home"}
@@ -225,3 +226,18 @@ def reroll(request):
         }
 
     return HttpResponse(json.dumps(response), content_type='application/json')
+
+def export(request):
+    user = None
+    if request.session.get('unique_id'):
+        # get their stuff from db
+        user = User.objects.filter(id=request.session['unique_id']).first()
+
+    meals = ScheduledMeal.objects.filter(user_id=user.id).filter(date__gte=datetime.datetime.now().date()).extra(order_by=['date']).all()
+    print len(meals)
+
+    exporter = EvernoteExporter(sandbox=True)
+    exporter.import_meals(meals)
+
+    return HttpResponse("Done")
+    # meal.recipe_id
