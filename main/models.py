@@ -37,7 +37,6 @@ class Recipe(models.Model):
 
 class Ingredient(models.Model):
     __tablename__ = 'main_ingredient'
-    id = models.IntegerField(primary_key=True)
 
     # Name which should match with our recipes. i.e. 'butter'
     name = models.CharField(max_length=255)
@@ -101,4 +100,4 @@ class Ingredient(models.Model):
 class UserIngredient(models.Model):
     __tablename__ = 'main'
     user_id = models.ForeignKey(User)
-    ingredient = models.ForeignKey(Ingredient)
+    ingredient_id = models.IntegerField(default=1001)
