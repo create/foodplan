@@ -232,7 +232,7 @@ def dashboard(request):
     total_price = "%.2f" % total_price
     page_info = {"page_title": "Dashboard"}
     return render(request, 'dashboard.html', {"page_info": page_info,
-                                              "recipes": recipes, "total_price": total_price, "username": request.session["name"]})
+                                              "recipes": recipes, "total_price": total_price, "username": request.session.get("name", "Hi")})
 
 def _get_random_recipe(is_vegetarian=False, ids_to_exclude=None):
     if not ids_to_exclude:
@@ -274,7 +274,7 @@ def export(request):
     meals = ScheduledMeal.objects.filter(user_id=user.id).filter(date__gte=datetime.datetime.now().date()).extra(order_by=['date']).all()[:4]
     print len(meals)
 
-    exporter = EvernoteExporter(sandbox=True)
+    exporter = EvernoteExporter(sandbox=False)
     exporter.import_meals(meals)
     response = {}
     response['result'] = 'Done'
