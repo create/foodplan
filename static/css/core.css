@@ -103,7 +103,7 @@ input[type=number] {
     background-size: cover;
     position: relative;
 }
-.meal-card-day, .meal-card-name {
+.meal-card-day, .meal-card-name, .meal-card-price {
     color: white;
     font-size: 20px;
     font-style: italic;
@@ -113,6 +113,13 @@ input[type=number] {
 .meal-card-name {
     bottom: 5px;
     left: 10px;
+}
+.meal-card-price {
+    top: 0px;
+    right: 10px;
+    /*font-weight: bold;*/
+    font-size: 32px;
+    display: none;
 }
 .meal-card-day {
     font-style: normal;
@@ -135,4 +142,9 @@ input[type=number] {
     position: absolute;
     bottom: 10px;
     right: 60px;
+}
+
+#totalprice {
+    font-size: 22px;
+
 }

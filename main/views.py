@@ -178,13 +178,16 @@ def dashboard(request):
                 recipes.append(recipe)
         today = today + datetime.timedelta(days=1)
 
+    total_price = 0.
     for recipe in recipes:
+        total_price += float(recipe.price)
         recipe.day = util.day_string(day)
         recipe.day_no = day
         day = (day + 1) % 7
+    total_price = "%.2f" % total_price
     page_info = {"page_title": "Dashboard"}
     return render(request, 'dashboard.html', {"page_info": page_info,
-                                              "recipes": recipes})
+                                              "recipes": recipes, "total_price": total_price})
 
 def _get_random_recipe(is_vegetarian=False, ids_to_exclude=None):
     if not ids_to_exclude:
