@@ -108,9 +108,7 @@ def improve(request):
         else:
             print "err\n"
 
-    ingredients = Ingredient.objects.all()[:200];
-    page_info = {"page_title": "Improve",
-                 "ingredients": ingredients}
+    page_info = {"page_title": "Improve"}
     return render(request, 'improve.html', {"page_info": page_info})
 
 
@@ -129,13 +127,13 @@ def dashboard(request):
     # save preferences sent via POST
     # TODO: check if all values are set
     if request.method == 'POST':
-        request.session['age'] = request.POST['age']
-        request.session['gender'] = request.POST['gender']
-        request.session['style'] = request.POST['style']
+        request.session['mouths'] = request.POST.get('mouths', 1)
+        request.session['gender'] = request.POST.get('gender', 'm')
+        request.session['style'] = request.POST.get('style', 'classic')
         # save user in db
-        user.is_vegetarian = (request.POST['style'] == "vegetarian");
-        user.age = int(request.POST['age']);
-        user.gender = int(request.POST['gender'] == 'm');
+        user.is_vegetarian = (request.POST.get('style', 'classic') == "vegetarian");
+        user.mouths = int(request.POST.get('mouths', 1));
+        user.gender = int(request.POST.get('gender', 'm') == 'm');
         user.save()
 
     # redirect if preferences are not available via session

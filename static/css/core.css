@@ -53,9 +53,8 @@ footer a {
     color: #aaaaaa;
 }
 input[type=number] {
-    width: 80px;
+    width: 190px;
 }
-
 
 .top-buffer {
     margin-top: 100px;
@@ -119,6 +118,7 @@ input[type=number] {
 .meal-card-name {
     bottom: 5px;
     left: 10px;
+    max-width: 300px;
 }
 .meal-card-price {
     top: 0px;
