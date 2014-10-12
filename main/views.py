@@ -140,12 +140,14 @@ def dashboard(request):
     # save preferences sent via POST
     # TODO: check if all values are set
     if request.method == 'POST':
-        request.session['mouths'] = request.POST.get('mouths', 1)
+        #request.session['mouths'] = request.POST.get('mouths', 1)
+        request.session['age'] = request.POST.get('age', 1)
+        request.session['name'] = request.POST.get('name')
         request.session['gender'] = request.POST.get('gender', 'm')
         request.session['style'] = request.POST.get('style', 'classic')
         # save user in db
         user.is_vegetarian = (request.POST.get('style', 'classic') == "vegetarian");
-        user.mouths = int(request.POST.get('mouths', 1));
+        user.age = int(request.POST.get('age', 1));
         user.gender = int(request.POST.get('gender', 'm') == 'm');
         user.save()
 
@@ -208,7 +210,7 @@ def dashboard(request):
     total_price = "%.2f" % total_price
     page_info = {"page_title": "Dashboard"}
     return render(request, 'dashboard.html', {"page_info": page_info,
-                                              "recipes": recipes, "total_price": total_price})
+                                              "recipes": recipes, "total_price": total_price, "username": request.session["name"]})
 
 def _get_random_recipe(is_vegetarian=False, ids_to_exclude=None):
     if not ids_to_exclude:
