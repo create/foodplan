@@ -27,6 +27,7 @@ def signup(request):
 def pantry(request):
     page_info = {"page_title": "Your pantry"}
     ingredients = Ingredient.objects.all()[:20]
+    print len(ingredients)
     return render(request, 'pantry.html', {"page_info": page_info,
                                            "ingredients": ingredients})
 

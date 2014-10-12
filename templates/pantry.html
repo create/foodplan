@@ -1,6 +1,11 @@
 {% extends "base_layout.html" %}
 {% load staticfiles %}
+{% block custom_css %}
+<style>
 
+
+</style>
+{% endblock %}
 {% block page_content %}
     <h1>Edit your ingredients</h1>
     <h4>Shows ingredients currently in the user's pantry.</h4>
@@ -11,14 +16,14 @@
     </form>
     <div class="meal-card-factsheet">
         <table class="table table-hover">
-        {% for ingredient in ingredients %}
-            <tr>
-                <td>
-                    <span class="description">{{ ingredient.description }}</span>
-                    <button style="float: right;" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></table>
-                </td>
-            </tr>
-        {% endfor %}
+            {% for ingredient in ingredients %}
+                <tr>
+                    <td>
+                        <span class="description">{{ ingredient.description }}</span>
+                        <button style="float: right;" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></table>
+                    </td>
+                </tr>
+            {% endfor %}
         </table>
     </div>
 {% endblock %}
