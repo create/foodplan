@@ -27,14 +27,19 @@
 {% block extrascript %}
 
 <script type="text/javascript" charset="utf-8">
-    $(".meal-card").hover(function() {
-        $(".meal-card").all()
-        $(this).find(".meal-card-filter").animate({"background-color": "rgba(0,0,0,0.4)"}, 400);
-        $(this).find(".meal-card-price").stop().fadeIn(100);
-    }, function() {
+$(document).ready(function() {
+    var fadeOut = function () {
         $(this).find(".meal-card-filter").css({"background": "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%)"});
         $(this).find(".meal-card-price").fadeOut(600);
-    });
+    };
+    $(".meal-card").hover(function () {
+        $(this).find(".meal-card-filter").animate({"background-color": "rgba(0,0,0,0.4)"}, 400);
+        $(this).find(".meal-card-price").stop().fadeIn(100);
+        var others = $(".meal-card");
+        $(others).find(".meal-card-filter").css({"background": "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%)"});
+        $(others).find(".meal-card-price").fadeOut(600);
+    }, fadeOut);
+});
 </script>
 
 {% endblock %}
