@@ -6,6 +6,9 @@
     display: block;
     height: 100%;
 }
+form {
+    margin-bottom: 20px;
+}
 
 </style>
 {% endblock %}
@@ -15,7 +18,7 @@
     <h2>Add</h2>
     <form action="add_ingredient">
         <input type="hidden" name="ingredient-id" class="ingredient-id">
-        <input type="text" class="form-control" name="search">
+        <input type="text" class="form-control" placeholder="Ingredient Name" name="search">
     </form>
     <div class="meal-card-factsheet">
         <table class="table table-hover">
@@ -23,8 +26,8 @@
                 {% for ingredient in ingredients %}
                     <tr class="{{ ingredient.name }}">
                         <td>
-                            <span class="description">{{ ingredient.description }}</span>
-                            <button style="float: right;" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></table>
+                            <span class="description">{{ ingredient.description }} - {{ ingredient.carbohydrt_g }}g Carbs, {{ ingredient.protein_g }}g Protein, ...</span>
+                            <button style="float: right;" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
                         </td>
                     </tr>
                 {% endfor %}
