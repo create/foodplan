@@ -118,8 +118,8 @@ input[type=number] {
 .meal-card-price {
     top: 0px;
     right: 10px;
-    font-weight: bold;
-    font-size: 30px;
+    /*font-weight: bold;*/
+    font-size: 32px;
     display: none;
 }
 .meal-card-day {

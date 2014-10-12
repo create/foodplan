@@ -26,9 +26,13 @@
 
 <script type="text/javascript" charset="utf-8">
     $(".meal-card").hover(function() {
+        $(this).find(".meal-card-price").stop();
         $(this).find(".meal-card-price").fadeIn(100);
+        $(this).find(".meal-card-filter").animate({"background-color": "rgba(0,0,0,0.5)"}, 500);
     }, function(){
-        $(this).find(".meal-card-price").fadeOut(500);
+        var savedBg = $(this).find(".meal-card-filter").css("background");
+        $(this).find(".meal-card-filter").css({"background": savedBg});
+        $(this).find(".meal-card-price").fadeOut(1000);
     });
 </script>
 
