@@ -152,7 +152,7 @@ def dashboard(request):
     today = now.date()
     recipes = []
     for i in range(0, num_to_show):
-        meal = ScheduledMeal.objects.filter(date=today)
+        meal = ScheduledMeal.objects.filter(date=today).first()
         ids_to_exclude = (recipe.id for recipe in recipes)
         if not meal:
             if not user.is_vegetarian:
@@ -165,7 +165,9 @@ def dashboard(request):
                 meal = ScheduledMeal(date=today, user_id=user.id, recipe_id=recipe_id)
                 meal.save()
         if meal:
-            recipes.append(meal)
+            recipe = Recipe.objects.filter(id=meal.recipe_id).first()
+            if recipe:
+                recipes.append(recipe)
         today = today + datetime.timedelta(days=1)
 
     for recipe in recipes:
