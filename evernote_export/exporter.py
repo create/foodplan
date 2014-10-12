@@ -11,7 +11,6 @@ from main.models import Recipe
 class EvernoteExporter():
     def __init__(self, sandbox=True):
         self.sandbox = sandbox
-        self.notebook_name = "Pantry"
 
         self.ingredients = {}
 
@@ -27,6 +26,9 @@ class EvernoteExporter():
         self._check_api_version()
         self.note_store = self.client.get_note_store()
 
+        self.notebook_name_for_groceries = "Pantry Groceries"
+        self.notebook_name_for_recipes = "Pantry Recipes"
+
     def _check_api_version(self):
         user_store = self.client.get_user_store()
         version_ok = user_store.checkVersion(
@@ -39,25 +41,25 @@ class EvernoteExporter():
         if not version_ok:
             exit(1)
 
-    def _get_notebook_guid(self):
+    def _get_notebook_guid(self, name):
         notebooks = self.note_store.listNotebooks()
 
         target_notebook = ''
         for notebook in notebooks:
-            if notebook.name == self.notebook_name:
+            if notebook.name == name:
                 target_notebook = notebook
                 break
 
         if target_notebook == '':
-            print 'Notebook Groceries does not exist'
+            print 'Notebook does not exist'
             exit(1)
 
         return target_notebook.guid
 
-    def _create_note(self, title, content):
+    def _create_note(self, title, content, guid):
         note = Types.Note()
         note.title = title
-        note.notebookGuid = self._get_notebook_guid()
+        note.notebookGuid = guid
 
         note.content = '<?xml version="1.0" encoding="UTF-8"?>'
         note.content += '<!DOCTYPE en-note SYSTEM ' \
@@ -79,7 +81,9 @@ class EvernoteExporter():
         content += '<div><br/></div>'
         content += self._create_ingredients_list(item.ingredients_json)
 
-        return self._create_note(title, content)
+        guid = self._get_notebook_guid(self.notebook_name_for_recipes)
+
+        return self._create_note(title, content, guid)
 
     def export_grocery_list(self):
         items = self.ingredients
@@ -90,7 +94,9 @@ class EvernoteExporter():
         for name in items:
             content += '<div><en-todo/>' + name + '</div>'
 
-        return self._create_note(title, content)
+        guid = self._get_notebook_guid(self.notebook_name_for_groceries)
+
+        return self._create_note(title, content, guid)
 
     def _create_steps_list(self, steps_json):
         sl = json.loads(steps_json)
