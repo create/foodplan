@@ -178,10 +178,12 @@ def dashboard(request):
                 recipes.append(recipe)
         today = today + datetime.timedelta(days=1)
 
+    total_price = 0.
     for recipe in recipes:
+        total_price += float(recipe.price)
         recipe.day = util.day_string(day)
         recipe.day_no = day
         day = (day + 1) % 7
     page_info = {"page_title": "Dashboard"}
     return render(request, 'dashboard.html', {"page_info": page_info,
-                                              "recipes": recipes})
+                                              "recipes": recipes, "total_price": total_price})
