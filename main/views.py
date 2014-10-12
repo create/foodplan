@@ -231,12 +231,14 @@ def reroll(request):
         day_to_reroll = today + datetime.timedelta(days=delta)
         meal = ScheduledMeal.objects.filter(date=day_to_reroll).filter(user_id=user.id).first()
         recipe = _get_random_recipe(user.is_vegetarian)
+        old_id = meal.recipe_id
+        old_recipe = Recipe.objects.get(id=old_id)
         meal.recipe_id = recipe.id
         meal.save()
         response['result'] = {'image_url': recipe.image_url,
             'name': recipe.name,
             'price': str(recipe.price),
-            'total_price': str(recipe.price) # TODO make real price
+            'total_price_change': str(recipe.price - old_recipe.price) # TODO make real price
         }
 
     return HttpResponse(json.dumps(response), content_type='application/json')
