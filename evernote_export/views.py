@@ -5,6 +5,9 @@ from django import http
 import json
 
 
+def export_recipe(request, id):
+    return http.HttpResponse(id)
+
 def test(request):
     exporter = EvernoteExporter(sandbox=True)
     rs = Recipe.objects.all()[:2]

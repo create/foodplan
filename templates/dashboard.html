@@ -10,7 +10,7 @@
                             <div class="meal-card-filter">
                                 <span class="meal-card-day">{{ recipe.day }}</span>
                                 <span class="meal-card-name">{{ recipe.name }}</span>
-                                <button class="btn btn-success save"><span class="glyphicon glyphicon-heart-empty"></span></button>
+                                <a href="{% url 'export_recipe' recipe.id %}" class="btn btn-success save"><span class="glyphicon glyphicon-heart-empty"></span></a>
                                 <button class="btn btn-danger reroll reroll-{{ recipe.day_no }}"><span class="glyphicon glyphicon-refresh"></span></button>
                             </div>
                         </div>
