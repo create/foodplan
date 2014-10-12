@@ -26,7 +26,9 @@ def signup(request):
 
 def pantry(request):
     page_info = {"page_title": "Your pantry"}
-    return render(request, 'pantry.html', {"page_info": page_info})
+    ingredients = Ingredient.objects.all()[:20]
+    return render(request, 'pantry.html', {"page_info": page_info,
+                                           "ingredients": ingredients})
 
 
 def about(request):

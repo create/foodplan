@@ -5,11 +5,18 @@ h1 {
     margin-top: 0;
     margin-bottom: 30px;
 }
+.row .col-md-4 {
+    min-width: 400px;
+}
+.top-row {
+    display: inline-block;
+}
 </style>
 {% endblock %}
 {% block page_content %}
 <!-- Main component for a primary marketing message or call to action -->
-<h1>Cook these for dinner this week.</h1>
+<h1 class="top-row">Cook these for dinner this week.</h1>
+    <button class="top-row"><span class=""Export to Evernote</button>
     <div class="container-fluid">
         <div class="row">
             {% for recipe in recipes %}

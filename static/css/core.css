@@ -210,3 +210,6 @@ input[type=number] {
     /*font-weight: bold;*/
     font-size: 22px;
 }
+input {
+    max-width: 600px;
+}
