@@ -26,12 +26,10 @@
 
 <script type="text/javascript" charset="utf-8">
     $(".meal-card").hover(function() {
-        $(this).find(".meal-card-price").stop();
-        $(this).find(".meal-card-price").fadeIn(100);
         $(this).find(".meal-card-filter").animate({"background-color": "rgba(0,0,0,0.5)"}, 500);
+        $(this).find(".meal-card-price").stop().fadeIn(100);
     }, function(){
-        var savedBg = $(this).find(".meal-card-filter").css("background");
-        $(this).find(".meal-card-filter").css({"background": savedBg});
+        $(this).find(".meal-card-filter").css({"background": "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%)"});
         $(this).find(".meal-card-price").fadeOut(1000);
     });
 </script>
