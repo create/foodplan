@@ -13,8 +13,8 @@ class User(models.Model):
     pass
 
 class ScheduledMeal(models.Model):
-    __tablename__ = 'main_scheduled_meal'
-    recipe_id = models.IntegerField()
+    __tablename__ = 'main_scheduledmeal'
+    recipe_id = models.IntegerField(default=0)
     date = models.DateField(default=datetime.date.today)
     user_id = models.IntegerField(default=0)
 
