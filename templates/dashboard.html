@@ -11,12 +11,18 @@ h1 {
 .top-row {
     display: inline-block;
 }
+.evernote {
+    float: right;
+
+}
 </style>
 {% endblock %}
 {% block page_content %}
 <!-- Main component for a primary marketing message or call to action -->
-<h1 class="top-row">Cook these for dinner this week.</h1>
-    <button class="top-row"><span class=""Export to Evernote</button>
+<div>
+    <h1 class="top-row">Cook these for dinner this week.</h1>
+    <button class="top-row evernote btn btn-success">Export week to Evernote<span class="glyphicon glyphicon-check"></span></button>
+</div>
     <div class="container-fluid">
         <div class="row">
             {% for recipe in recipes %}

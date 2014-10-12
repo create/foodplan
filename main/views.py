@@ -252,6 +252,7 @@ def export(request):
 
     exporter = EvernoteExporter(sandbox=True)
     exporter.import_meals(meals)
-
-    return HttpResponse("Done")
+    response = {}
+    response['result'] = 'Done'
+    return HttpResponse(json.dumps(response), content_type='application/json')
     # meal.recipe_id
