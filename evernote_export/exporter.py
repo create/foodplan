@@ -13,6 +13,7 @@ class EvernoteExporter():
         self.sandbox = sandbox
 
         self.ingredients = {}
+        self.recipes = []
 
         self.auth_token_real = "S=s344:U=371ef6d:E=150580d1802:C=149005be9c0:P=1cd:A=en-devtoken:V=2:H=5f5cb18a5e1755a7facdff9e44b7b411"
         self.auth_token_sandbox = "S=s1:U=8fa5d:E=150581d5082:C=149006c2218:P=1cd:A=en-devtoken:V=2:H=e59f1fe3b6442900f944689ea7ecff55"
@@ -72,6 +73,11 @@ class EvernoteExporter():
         return created_note.guid
 
     def export_recipe(self, item):
+        if item.id in self.recipes:
+            return None
+        else:
+            self.recipes.append(item.id)
+
         title = "Recipe: " + item.name
 
         content = ''
