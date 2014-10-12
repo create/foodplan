@@ -30,6 +30,11 @@ def pantry(request):
     return render(request, 'pantry.html', {"page_info": page_info})
 
 
+def about(request):
+    page_info = {"page_title": "About"}
+    return render(request, 'about.html', {"page_info": page_info})
+
+
 def improve(request):
     if request.method == 'POST':
         print request.POST
@@ -71,6 +76,7 @@ def improve(request):
                     # for meat in ['turkey', 'beef', 'meat', 'steak', 'chicken', 'pork', 'bacon', 'ham', 'duck', 'goose']:
                     #     if any(meat in s for s in ingredients):
                     #         is_vegetarian = False
+
                     prep_time_seconds = a["totalTimeInSeconds"]
                     instructions = ["If you're cooking chicken for this, trim visible fat from 4 chicken breasts, then cut the chicken lengthwise into thirds.  Put the can of chicken stock, 2 cans of water, and the Italian Herb Blend into a small sauce pan and bring to a boil.  When it boils add chicken breasts, turn heat to medium low, and  let simmer 15-20 minutes, or until the chicken is cooked through.  Drain the chicken into a colander placed in the sink and let it cool.  (I saved the liquid in the freezer to add when I'm making chicken stock.)'In a large skillet, melt butter over medium; reserve 1 tablespoon in a small bowl. To skillet, add apples, 1/2 cup sugar, and cinnamon. Increase heat to medium-high; cook, tossing occasionally, until apples are tender and liquid has evaporated, about 15 minutes. Spread filling on a second rimmed baking sheet; let cool completely.",
                                     "While the chicken cools, slice the basil leaves (and wash if needed), chop green onions, and measure the freshly-grated Parmesan. When it's cool, dice chicken into pieces about 3/4 inch square and place into medium-sized bowl.",
