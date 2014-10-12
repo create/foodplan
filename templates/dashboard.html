@@ -10,9 +10,26 @@
                     <div class="meal-card">
                         <div class="meal-card-image card-{{ recipe.day_no }}" style="background-image: url('{{ recipe.image_url }}');">
                             <div class="meal-card-filter">
+                                <div class="meal-card-factsheet">
+                                    <div class="ingredients-label">Ingredients</div>
+                                    <div class="preptime">
+                                        <span class="glyphicon glyphicon-time preptime-icon"></span>
+                                        <b>{{ recipe.prep_time }}</b> mins
+                                    </div>
+                                    <table class="table table-hover">
+                                    {% for ingredient in recipe.ingredient_lines %}
+                                        <tr>
+                                            <td>
+                                                {{ ingredient }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </table>
+                                </div>
                                 <span class="meal-card-day card-{{ recipe.day_no }}">{{ recipe.day }}</span>
                                 <span class="meal-card-name card-{{ recipe.day_no }}">{{ recipe.name }}</span>
                                 <span class="meal-card-price card-{{ recipe.day_no }}" id="pricetag">{{ recipe.price }}$</span>
+                                <!--<button class="btn btn-info btn-ingredients"><span class="glyphicon glyphicon-list"></span></button>-->
                                 <button class="btn btn-success save"><span class="glyphicon glyphicon-heart-empty"></span></button>
                                 <button class="btn btn-danger reroll reroll-{{ recipe.day_no }}" day_no="{{ recipe.day_no }}"><span class="glyphicon glyphicon-refresh"></span></button>
                             </div>
@@ -33,6 +50,10 @@
     }, function(){
         $(this).find(".meal-card-filter").css({"background": "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%)"});
         $(this).find(".meal-card-price").fadeOut(1000);
+    });
+
+    $(".meal-card").click(function() {
+        $(this).find(".meal-card-factsheet").show().animate({height: "100%"});
     });
 </script>
 
