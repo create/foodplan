@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 import requests
 from models import Recipe, Ingredient, User, ScheduledMeal
 import util, forms
+import re, posixpath, urlparse
 
 def home(request):
     page_info = {"page_title": "Home"}
@@ -41,6 +42,13 @@ def improve(request):
         app_id = "e91111f8"
         app_key = "f9d16213fe4a2371bb8c919c89dc409a"
         recipe_id = request.POST['yummly-id']
+
+        # extract actual recipe id if recipe_id is a url
+        if not re.match('^[\w-]+$', recipe_id):
+            print "rematch"
+            recipe_id = posixpath.basename(urlparse.urlsplit(recipe_id).path)
+            print recipe_id
+
         instructions = []
         for i in range(1,5):
             if request.POST['step-%d' % i]:
