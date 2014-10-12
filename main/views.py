@@ -131,28 +131,20 @@ def improve(request):
 def dashboard(request):
     make_user = True
     user = None
-    if request.session.get('unique_id'):
-        # get their stuff from db
-        user = User.objects.filter(id=request.session['unique_id']).first()
-
-    if not user:
-        user = User()
-        user.save()
-        request.session['unique_id'] = user.id
 
     # save preferences sent via POST
     # TODO: check if all values are set
     if request.method == 'POST':
+        user = User()
+        user.save()
+        request.session['unique_id'] = user.id
         #request.session['mouths'] = request.POST.get('mouths', 1)
         try:
             request.session['age'] = request.POST.get('age', 1)
         except ValueError:
             request.session['age'] = 1
 
-        try:
-            request.session['name'] = request.POST.get('name')
-        except ValueError:
-            request.session['name'] = 'Hi'
+        request.session['name'] = request.POST.get('name', 'Hi')
 
         try:
             request.session['gender'] = request.POST.get('gender', 'm')
@@ -172,7 +164,12 @@ def dashboard(request):
         user.age = int(request.POST.get('age', 1));
         user.gender = int(request.POST.get('gender', 'm') == 'm');
         user.save()
-
+    elif request.session.get('unique_id'):
+        # get their stuff from db
+        user = User.objects.filter(id=request.session['unique_id']).first()
+    else:
+        user = User()
+        user.save()
     # redirect if preferences are not available via session
     # elif not all(info in request.session for info in ['age', 'gender', 'style']):
     #     return redirect('/')
