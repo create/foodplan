@@ -144,10 +144,29 @@ def dashboard(request):
     # TODO: check if all values are set
     if request.method == 'POST':
         #request.session['mouths'] = request.POST.get('mouths', 1)
-        request.session['age'] = request.POST.get('age', 1)
-        request.session['name'] = request.POST.get('name')
-        request.session['gender'] = request.POST.get('gender', 'm')
-        request.session['style'] = request.POST.get('style', 'classic')
+        try:
+            request.session['age'] = request.POST.get('age', 1)
+        except ValueError:
+            request.session['age'] = 1
+
+        try:
+            request.session['name'] = request.POST.get('name')
+        except ValueError:
+            request.session['name'] = 'Hi'
+
+        try:
+            request.session['gender'] = request.POST.get('gender', 'm')
+        except ValueError:
+            request.session['gender'] = 'm'
+
+        try:
+            request.session['style'] = request.POST.get('style', 'classic')
+        except ValueError:
+            request.session['style'] = 'classic'
+
+        if request.session['name'] == '':
+            request.session['name'] = "Hi"
+
         # save user in db
         user.is_vegetarian = (request.POST.get('style', 'classic') == "vegetarian");
         user.age = int(request.POST.get('age', 1));
