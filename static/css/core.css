@@ -55,7 +55,7 @@ footer {
     font-style: italic;
 }
 footer > p {
-    line-height: 40px;
+    line-height: 20px;
     vertical-align: middle;
     margin-top: auto;
     margin-bottom: auto;
@@ -63,6 +63,9 @@ footer > p {
 
 footer a {
     color: #999999;
+}
+footer .light {
+    color: #cccccc;
 }
 
 .top-buffer {
