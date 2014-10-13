@@ -29,15 +29,9 @@ h1, h2, h3, h4, h5, h6, p {
 form {
     text-align: center;
 }
-.btn-group {
-    width: 200px;
-}
 .row {
     margin-bottom: 30px;
     margin-top: 30px;
-}
-.space {
-    height: 20px;
 }
 </style>
 {% endblock %}
@@ -51,43 +45,37 @@ form {
 
             <div class="row">
                 <label>
-                    <input type="text" class="form-control input" placeholder="Name" name="name">
+                    <input type="text" class="form-control input" placeholder="Your Name" name="name">
                 </label>
             </div>
             <div class="row">
                 <label>
-                    <input type="text" class="form-control input" placeholder="Age" name="age">
+                    <input type="text" class="form-control input" placeholder="# of mouths to feed" name="age">
                 </label>
             </div>
             <div class="row">
-                <div class="btn-group btn-group-prefs" data-toggle="buttons">
-                    <label class="btn btn-default btn-prefs">
-                        <input type="radio" name="gender" value="m">Male
-                    </label>
-                    <label class="btn btn-default btn-prefs">
-                        <input type="radio" name="gender" value="f">Female
-                    </label>
-                </div>
+                <label>
+                    <input type="text" class="form-control input" placeholder="Monthly Budget ($)" name="budget">
+                </label>
             </div>
+
             <div class="row">
-                <div class="btn-group btn-group-prefs" data-toggle="buttons">
-                    <label class="btn btn-default btn-prefs">
-                        <input type="radio" name="style" value="classic">
-                        Everything
-                    </label>
-                    <label class="btn btn-default btn-prefs">
-                        <input type="radio" name="style" value="vegetarian">
-                        Vegetarian
-                    </label>
-                </div>
+                <label class="btn btn-default btn-prefs" data-toggle="checkbox">
+                    <input type="checkbox" name="vegetarian" value="vegetarian">
+                    Vegetarian
+                </label>
+                <label class="btn btn-default btn-prefs" data-toggle="checkbox">
+                    <input type="checkbox" name="gluten" value="gluten-free">
+                    Gluten-free
+                </label>
             </div>
         <div class="form-group text-center">
-            <button type="submit" class="btn btn-lg btn-submit">Let's go!</button>
+            <button type="submit" class="btn btn-lg btn-submit">Start generating meals</button>
         </div>
 
         {% csrf_token %}
     </form>
-    <div class="space"></div>
+
 
 </div>
 {% endblock %}

@@ -1,3 +1,6 @@
+html, body {
+    height: 100%;
+}
 body {
     background-color: rgba(228, 225, 186, 0.19);
     color: #444444;
@@ -32,15 +35,21 @@ header {
     max-width: 1600px;
     margin-left: auto;
     margin-right: auto;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin-bottom: -100px;
+
 }
 .content > h1:first-child {
     margin-top: 0;
 }
-
+footer, .space {
+    height: 100px;
+}
 footer {
     background: #ffffff;
     color: #aaaaaa;
-    height: 100px;
     width: 100%;
     text-align: center;
     font-style: italic;
@@ -55,9 +64,6 @@ footer > p {
 footer a {
     color: #999999;
 }
-input[type=number] {
-    width: 190px;
-}
 
 .top-buffer {
     margin-top: 100px;
@@ -65,13 +71,6 @@ input[type=number] {
 
 .col-prefs {
     margin-top: 40px;
-}
-
-.btn-prefs {
-    width: 50%;
-}
-.btn-group {
-    width: 60%;
 }
 
 
@@ -210,6 +209,6 @@ input[type=number] {
     /*font-weight: bold;*/
     font-size: 22px;
 }
-input {
+input, label {
     max-width: 600px;
 }
